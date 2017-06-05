@@ -32,36 +32,56 @@ public class Diccionario {
         return exito;
     }
 
-    public boolean insertarAux(Ciudad ciudad, String clave, NodoAVL nodo, NodoAVL padre) {
-        boolean exito;
-        if (nodo.getClave().equals(clave)) //Clave repetida.
+    public boolean insertarAux(Ciudad ciudad, String clave, NodoAVL actual, NodoAVL padre) {
+        boolean exito = false;
+        if (!actual.getClave().equals(clave)) //Clave no repetida.
         {
-            exito = false;
-        } else {
-            if (nodo.getClave().compareTo(clave) > 0)// Clave mayor alfabeticamente.
+            if (actual.getClave().compareTo(clave) > 0)// Clave mayor alfabeticamente.
             {
-                if (nodo.getHijoDerecho() == null) {
-                    nodo.setHijoDerecho(new NodoAVL(ciudad, clave));//Inserta hijo derecho.
+                if (actual.getHijoDerecho() == null) {
+                    actual.setHijoDerecho(new NodoAVL(ciudad, clave));//Inserta hijo derecho.
                     exito = true;
                 } else {
-                    exito = insertarAux(ciudad, clave, nodo.getHijoDerecho(), nodo);// Baja por la derecha.                    
+                    exito = insertarAux(ciudad, clave, actual.getHijoDerecho(), actual);// Baja por la derecha.                    
                 }
             } else {
-                if (nodo.getHijoIzquierdo() == null) {
-                    nodo.setHijoIzquierdo(new NodoAVL(ciudad, clave));// Inserta hijo izquierdo.
+                if (actual.getHijoIzquierdo() == null) {
+                    actual.setHijoIzquierdo(new NodoAVL(ciudad, clave));// Inserta hijo izquierdo.
                     exito = true;
                 } else {
-                    exito = insertarAux(ciudad, clave, nodo.getHijoIzquierdo(), nodo);//Baja por la izquierda.
+                    exito = insertarAux(ciudad, clave, actual.getHijoIzquierdo(), actual);//Baja por la izquierda.
                 }
             }
 
         }
+        if(exito){
+            actual.setAltura(altura(actual));
+            //balancear(actual,padre);
+        }
+        
 
         return exito;
     }
+
+    private int altura(NodoAVL actual) {
+        return alturaAux(actual);
+
+    }
     
-    private void altura(NodoAVL nodo){
+    private int alturaAux(NodoAVL actual){
+        int altD = 0, altI=0, alt;
+        if(actual!=null){
+        if(actual.getHijoIzquierdo()!=null){
+            altI= 1+ alturaAux(actual.getHijoIzquierdo());
+        }
+        if(actual.getHijoDerecho()!=null){
+            altD= 1+ alturaAux(actual.getHijoDerecho());
+        }        
+        alt = (altI>=altD)? altI: altD;
         
+        }
+alt = 0;       
+        return alt;
     }
 
 }
