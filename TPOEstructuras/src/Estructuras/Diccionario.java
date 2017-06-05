@@ -22,7 +22,7 @@ public class Diccionario {
     }
 
     public boolean insertar(Ciudad ciudad, String clave) {
-        boolean exito = false;
+        boolean exito;
         if (this.raiz == null) {
             this.raiz = new NodoAVL(ciudad, clave);
             exito = true;
@@ -54,11 +54,10 @@ public class Diccionario {
             }
 
         }
-        if(exito){
+        if (exito) {
             actual.setAltura(altura(actual));
             //balancear(actual,padre);
         }
-        
 
         return exito;
     }
@@ -67,20 +66,21 @@ public class Diccionario {
         return alturaAux(actual);
 
     }
-    
-    private int alturaAux(NodoAVL actual){
-        int altD = 0, altI=0, alt;
-        if(actual!=null){
-        if(actual.getHijoIzquierdo()!=null){
-            altI= 1+ alturaAux(actual.getHijoIzquierdo());
+
+    private int alturaAux(NodoAVL actual) {
+        int altD = 0, altI = 0, alt;
+        if (actual != null) {
+            if (actual.getHijoIzquierdo() != null) {
+                altI = 1 + alturaAux(actual.getHijoIzquierdo());
+            }
+            if (actual.getHijoDerecho() != null) {
+                altD = 1 + alturaAux(actual.getHijoDerecho());
+            }
+            alt = (altI >= altD) ? altI : altD;
+
+        } else {
+            alt = -1;
         }
-        if(actual.getHijoDerecho()!=null){
-            altD= 1+ alturaAux(actual.getHijoDerecho());
-        }        
-        alt = (altI>=altD)? altI: altD;
-        
-        }
-alt = 0;       
         return alt;
     }
 
