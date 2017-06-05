@@ -13,11 +13,7 @@ public class Ciudad {
     private String nombre,provincia;   
     private int cantidadHabitantes;
     private boolean alojamiento;
-
-    private boolean putasHarryPutas;
-
     private boolean tieneProstibulos;
     
-
     
 }
