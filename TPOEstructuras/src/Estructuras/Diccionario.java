@@ -84,4 +84,40 @@ public class Diccionario {
         return alt;
     }
 
+    private NodoAVL rotacionIzquierda(NodoAVL actual) {
+        NodoAVL aux = actual.getHijoDerecho(), aux2 = aux.getHijoIzquierdo();
+        aux.setHijoIzquierdo(actual);
+        actual.setHijoDerecho(aux2);
+        actual.setAltura(altura(actual));
+        aux.setAltura(altura(aux));
+        return aux;
+    }
+
+    private NodoAVL rotacionDerecha(NodoAVL actual) {
+        NodoAVL aux = actual.getHijoIzquierdo(), aux2 = aux.getHijoDerecho();
+        aux.setHijoDerecho(actual);
+        actual.setHijoIzquierdo(aux2);
+        actual.setAltura(altura(actual));
+        aux.setAltura(altura(aux));
+        return aux;
+    }
+
+    private int balance(NodoAVL actual) {
+        int res;
+        if (actual.getHijoIzquierdo() != null) {
+            if (actual.getHijoDerecho() != null) {
+                res = (actual.getHijoIzquierdo().getAltura() - actual.getHijoDerecho().getAltura());
+            } else {
+                res = actual.getHijoIzquierdo().getAltura() + 1;
+            }
+        } else {
+            if (actual.getHijoDerecho() != null) {
+                res = -1 - actual.getHijoDerecho().getAltura();
+            } else {
+                res = 0;
+            }
+        }
+        return res;
+    }
+
 }
