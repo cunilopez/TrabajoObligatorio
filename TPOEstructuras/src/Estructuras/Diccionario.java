@@ -56,7 +56,7 @@ public class Diccionario {
         }
         if (exito) {
             actual.setAltura(altura(actual));
-            //balancear(actual,padre);
+            balancear(actual,padre);
         }
 
         return exito;
@@ -82,6 +82,46 @@ public class Diccionario {
             alt = -1;
         }
         return alt;
+    }
+
+    private void balancear(NodoAVL actual, NodoAVL padre) {
+        int balance;
+        NodoAVL aux;
+        balance = balance(actual);
+        if (balance < -1) {
+            aux = actual.getHijoDerecho();
+            balance = balance(aux);
+            if (balance == 1) {
+                actual.setHijoDerecho(rotacionDerecha(aux));
+            }
+            if (padre == null) {
+                raiz = rotacionIzquierda(actual);
+            } else {
+                if (actual.getClave().compareTo(padre.getClave()) < 0) {
+                    padre.setHijoIzquierdo(rotacionIzquierda(actual));
+                } else {
+                    padre.setHijoDerecho(rotacionIzquierda(actual));
+                }
+                padre.setAltura(altura(padre));
+            }
+        }
+        if (balance > 1) {
+            aux = actual.getHijoIzquierdo();
+            balance = balance(aux);
+            if (balance == -1) {
+                actual.setHijoIzquierdo(rotacionIzquierda(aux));
+            }
+            if (padre == null) {
+                raiz = rotacionDerecha(actual);
+            } else {
+                if (actual.getClave().compareTo(padre.getClave()) < 0) {
+                    padre.setHijoIzquierdo(rotacionDerecha(actual));
+                } else {
+                    padre.setHijoDerecho(rotacionDerecha(actual));
+                }
+                padre.setAltura(altura(padre));
+            }
+        }
     }
 
     private NodoAVL rotacionIzquierda(NodoAVL actual) {
