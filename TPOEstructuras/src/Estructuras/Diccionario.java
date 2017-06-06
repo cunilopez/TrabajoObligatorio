@@ -221,6 +221,7 @@ public class Diccionario {
                             break;
                         }
                     default:
+                        assert padre != null;
                         if (padre.getClave().compareTo(actual.getClave()) > 0) {
                             padre.setHijoIzquierdo(null);
                         } else {
@@ -230,25 +231,24 @@ public class Diccionario {
                 }
                 if (padre != null) {
                     padre.setAltura(altura(padre));
-                }            
-            seElimino = true;
+                }
+                seElimino = true;
+            }
+            if (seElimino) {
+                balancear(actual, padre);
+            }
         }
-        if (seElimino) {
-            balancear(actual, padre);
-        }
-    }
 
         return seElimino;
     }
-    
-    private NodoAVL buscarSustituto(NodoAVL actual){
-    NodoAVL sustituto= actual;
-    while(sustituto.getHijoIzquierdo()!=null){
-    sustituto=sustituto.getHijoIzquierdo();
+
+    private NodoAVL buscarSustituto(NodoAVL actual) {
+        NodoAVL sustituto = actual;
+        while (sustituto.getHijoIzquierdo() != null) {
+            sustituto = sustituto.getHijoIzquierdo();
+        }
+        return sustituto;
     }
-    return sustituto;
-    }
-    
 
     private String hijos(NodoAVL actual) {
         String caso = "";
