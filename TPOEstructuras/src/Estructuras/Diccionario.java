@@ -56,7 +56,7 @@ public class Diccionario {
         }
         if (exito) {
             actual.setAltura(altura(actual));
-            balancear(actual,padre);
+            balancear(actual, padre);
         }
 
         return exito;
@@ -158,6 +158,113 @@ public class Diccionario {
             }
         }
         return res;
+    }
+
+    public boolean eliminar(String clave) {
+        boolean seElimino = false;
+        if (raiz != null) {
+            seElimino = eliminarAux(clave, raiz, null);
+        }
+        return seElimino;
+    }
+
+    private boolean eliminarAux(String clave, NodoAVL actual, NodoAVL padre) {
+        boolean seElimino = false;
+        String cantHijos, claveAux;
+        Ciudad ciudadAux;
+        if (actual != null) {
+            if (clave.compareTo(actual.getClave()) < 0) {
+                seElimino = eliminarAux(clave, actual.getHijoIzquierdo(), actual);
+                actual.setAltura(altura(actual));
+            } else if (clave.compareTo(actual.getClave()) > 0) {
+                seElimino = eliminarAux(clave, actual.getHijoDerecho(), actual);
+                actual.setAltura(altura(actual));
+            } else {
+                cantHijos = hijos(actual);
+                switch (cantHijos) {
+                    case "AMBOS":
+                        if (padre == null) {
+                            raiz = null;
+                        } else {
+                            NodoAVL sustituto = buscarSustituto(actual.getHijoDerecho());
+                            claveAux = sustituto.getClave();
+                            ciudadAux = sustituto.getCiudad();
+                            eliminarAux(claveAux, raiz, null);
+                            actual.setClave(claveAux);
+                            actual.setCiudad(ciudadAux);
+                            actual.setAltura(altura(actual));
+
+                        }
+                        break;
+                    case "IZQ":
+                        if (padre == null) {
+                            raiz = raiz.getHijoIzquierdo();
+                            raiz.setAltura(altura(raiz));
+                        } else {
+                            if (padre.getClave().compareTo(actual.getClave()) > 0) {
+                                padre.setHijoIzquierdo(actual.getHijoIzquierdo());
+                            } else {
+                                padre.setHijoDerecho(actual.getHijoIzquierdo());
+                            }
+                        }
+                        break;
+                    case "DER":
+                        if (padre == null) {
+                            raiz = raiz.getHijoDerecho();
+                            raiz.setAltura(altura(raiz));
+                        } else {
+                            if (padre.getClave().compareTo(actual.getClave()) > 0) {
+                                padre.setHijoIzquierdo(actual.getHijoDerecho());
+                            } else {
+                                padre.setHijoDerecho(actual.getHijoDerecho());
+                            }
+                            break;
+                        }
+                    default:
+                        if (padre.getClave().compareTo(actual.getClave()) > 0) {
+                            padre.setHijoIzquierdo(null);
+                        } else {
+                            padre.setHijoDerecho(null);
+                        }
+                        break;
+                }
+                if (padre != null) {
+                    padre.setAltura(altura(padre));
+                }            
+            seElimino = true;
+        }
+        if (seElimino) {
+            balancear(actual, padre);
+        }
+    }
+
+        return seElimino;
+    }
+    
+    private NodoAVL buscarSustituto(NodoAVL actual){
+    NodoAVL sustituto= actual;
+    while(sustituto.getHijoIzquierdo()!=null){
+    sustituto=sustituto.getHijoIzquierdo();
+    }
+    return sustituto;
+    }
+    
+
+    private String hijos(NodoAVL actual) {
+        String caso = "";
+        if (actual.getHijoIzquierdo() != null) {
+            if (actual.getHijoDerecho() != null) {
+                caso = "AMBOS";
+            } else {
+                caso = "IZQ";
+            }
+        } else {
+            if (actual.getHijoDerecho() != null) {
+                caso = "DER";
+            }
+        }
+
+        return caso;
     }
 
 }
