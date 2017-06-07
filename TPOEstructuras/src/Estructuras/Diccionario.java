@@ -38,18 +38,18 @@ public class Diccionario {
         {
             if (actual.getClave().compareTo(clave) > 0)// Clave mayor alfabeticamente.
             {
-                if (actual.getHijoDerecho() == null) {
-                    actual.setHijoDerecho(new NodoAVL(ciudad, clave));//Inserta hijo derecho.
+                if (actual.getHijoIzquierdo() == null) {
+                    actual.setHijoIzquierdo(new NodoAVL(ciudad, clave));//Inserta hijo derecho.
                     exito = true;
                 } else {
-                    exito = insertarAux(ciudad, clave, actual.getHijoDerecho(), actual);// Baja por la derecha.                    
+                    exito = insertarAux(ciudad, clave, actual.getHijoIzquierdo(), actual);// Baja por la derecha.                    
                 }
             } else {
-                if (actual.getHijoIzquierdo() == null) {
-                    actual.setHijoIzquierdo(new NodoAVL(ciudad, clave));// Inserta hijo izquierdo.
+                if (actual.getHijoDerecho() == null) {
+                    actual.setHijoDerecho(new NodoAVL(ciudad, clave));// Inserta hijo izquierdo.
                     exito = true;
                 } else {
-                    exito = insertarAux(ciudad, clave, actual.getHijoIzquierdo(), actual);//Baja por la izquierda.
+                    exito = insertarAux(ciudad, clave, actual.getHijoDerecho(), actual);//Baja por la izquierda.
                 }
             }
 
@@ -182,7 +182,7 @@ public class Diccionario {
             } else {
                 cantHijos = hijos(actual);
                 switch (cantHijos) {
-                    case "AMBOS":
+                    case "2":
                         if (padre == null) {
                             raiz = null;
                         } else {
@@ -196,7 +196,7 @@ public class Diccionario {
 
                         }
                         break;
-                    case "IZQ":
+                    case "I":
                         if (padre == null) {
                             raiz = raiz.getHijoIzquierdo();
                             raiz.setAltura(altura(raiz));
@@ -208,7 +208,7 @@ public class Diccionario {
                             }
                         }
                         break;
-                    case "DER":
+                    case "D":
                         if (padre == null) {
                             raiz = raiz.getHijoDerecho();
                             raiz.setAltura(altura(raiz));
@@ -221,11 +221,14 @@ public class Diccionario {
                             break;
                         }
                     default:
-                        assert padre != null;
-                        if (padre.getClave().compareTo(actual.getClave()) > 0) {
-                            padre.setHijoIzquierdo(null);
+                        if (padre == null) {
+                            this.raiz = null;
                         } else {
-                            padre.setHijoDerecho(null);
+                            if (padre.getClave().compareTo(actual.getClave()) > 0) {
+                                padre.setHijoIzquierdo(null);
+                            } else {
+                                padre.setHijoDerecho(null);
+                            }
                         }
                         break;
                 }
@@ -254,17 +257,36 @@ public class Diccionario {
         String caso = "";
         if (actual.getHijoIzquierdo() != null) {
             if (actual.getHijoDerecho() != null) {
-                caso = "AMBOS";
+                caso = "2";
             } else {
-                caso = "IZQ";
+                caso = "I";
             }
         } else {
             if (actual.getHijoDerecho() != null) {
-                caso = "DER";
+                caso = "D";
             }
         }
 
         return caso;
     }
 
+    public Ciudad recuperarElemento(String clave) {
+        return recuperarElementoAux(raiz, clave);
+    }
+
+    private Ciudad recuperarElementoAux(NodoAVL actual, String clave) {
+        Ciudad ciudad = null;
+        if (actual != null) {
+            if (!actual.getClave().equals(clave)) {
+                if (actual.getClave().compareTo(clave) > 0) {
+                    ciudad = recuperarElementoAux(actual.getHijoIzquierdo(), clave);
+                } else {
+                    ciudad = recuperarElementoAux(actual.getHijoDerecho(), clave);
+                }
+            } else {
+                ciudad = actual.getCiudad();
+            }
+        }
+        return ciudad;
+    }
 }
