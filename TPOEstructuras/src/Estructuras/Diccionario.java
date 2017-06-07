@@ -183,18 +183,14 @@ public class Diccionario {
                 cantHijos = hijos(actual);
                 switch (cantHijos) {
                     case "2":
-                        if (padre == null) {
-                            raiz = null;
-                        } else {
-                            NodoAVL sustituto = buscarSustituto(actual.getHijoDerecho());
-                            claveAux = sustituto.getClave();
-                            ciudadAux = sustituto.getCiudad();
-                            eliminarAux(claveAux, raiz, null);
-                            actual.setClave(claveAux);
-                            actual.setCiudad(ciudadAux);
-                            actual.setAltura(altura(actual));
+                        NodoAVL sustituto = buscarSustituto(actual.getHijoDerecho());
+                        claveAux = sustituto.getClave();
+                        ciudadAux = sustituto.getCiudad();
+                        eliminarAux(claveAux, raiz, null);
+                        actual.setClave(claveAux);
+                        actual.setCiudad(ciudadAux);
+                        actual.setAltura(altura(actual));
 
-                        }
                         break;
                     case "I":
                         if (padre == null) {
