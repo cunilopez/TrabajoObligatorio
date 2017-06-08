@@ -53,5 +53,9 @@ public class Ciudad {
     public void setAlojamiento(boolean alojamiento) {
         this.alojamiento = alojamiento;
     }
-    
+
+    @Override
+    public String toString() {
+        return "\nCiudad: " + nombre + ".\nProvincia: " + provincia + ".\nCantidad de Habitantes: " + cantidadHabitantes + ".\n¿Tiene alojamiento? " + (alojamiento ? "Si" : "No");
+    }
 }

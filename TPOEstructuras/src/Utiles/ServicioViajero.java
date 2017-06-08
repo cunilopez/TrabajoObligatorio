@@ -33,6 +33,8 @@ public class ServicioViajero {
             case 2:
                 break;
             case 3:
+                mostrarAtributos();
+                ingresarServicio();
                 break;
             case 4:
                 break;
@@ -45,8 +47,12 @@ public class ServicioViajero {
             case 8:
                 break;
             case 9:
+                System.out.println(diccionario.alfabeticamente());
+                ingresarServicio();
                 break;
             case 10:
+                scriptCarga();
+                ingresarServicio();
                 break;
             case 11:
                 break;
@@ -87,6 +93,7 @@ public class ServicioViajero {
                 break;
             case 2:
                 baja();
+                break;
             default:
                 altaobaja();
                 break;
@@ -98,9 +105,9 @@ public class ServicioViajero {
         String ciudad, provincia;
         boolean alojamiento = false;
         int habitantes, a = -1;//a inicializada en -1 para que el usuario pueda elegir una opcion.
-        System.out.println("Ingrese el nombre de la ciudad:");
+        System.out.println("Ingrese el nombre de la Ciudad:");
         ciudad = TecladoIn.readLine().toUpperCase();
-        System.out.println("Ingrese la provincia:");
+        System.out.println("Ingrese la Provincia:");
         provincia = TecladoIn.readLine().toUpperCase();
         System.out.println("¿Cuantos habitantes tiene?");
         habitantes = TecladoIn.readLineInt();
@@ -132,6 +139,38 @@ public class ServicioViajero {
         } else {
             System.out.println("No se encuentra la Ciudad");
         }
+    }
+
+    public void mostrarAtributos() {
+        String aBuscar;
+        Ciudad ciudad;
+        System.out.println("Ingrese la Ciudad que desea conocer sus atributos:");
+        aBuscar = TecladoIn.readLine().toUpperCase();
+        ciudad = diccionario.recuperarElemento(aBuscar);
+        if (ciudad != null) {
+            System.out.println(ciudad.toString());
+        } else {
+            System.out.println("No se encontro la ciudad.");
+        }
+    }
+    
+    public void scriptCarga(){
+    diccionario.insertar(new Ciudad("NEUQUEN","NEUQUEN",500000,true), "NEUQUEN");
+    diccionario.insertar(new Ciudad("POSADAS","MISIONES",344833,true), "POSADAS");
+    diccionario.insertar(new Ciudad("CORDOBA","CORDOBA",1391000,false), "CORDOBA");
+    diccionario.insertar(new Ciudad("USUAHIA","TIERRA DEL FUEGO",54546,true), "USUAHIA");
+    diccionario.insertar(new Ciudad("SALTA","SALTA",535303,true), "SALTA");
+    diccionario.insertar(new Ciudad("MENDOZA","MENDOZA",115041,false), "MENDOZA");
+    diccionario.insertar(new Ciudad("TRELEW","CHUBUT",50000,true), "TRELEW");
+    diccionario.insertar(new Ciudad("CORRIENTES","CORRIENTES",654325,true), "CORRIENTES");
+    diccionario.insertar(new Ciudad("NECOCHEA","BUENOS AIRES",416633,false), "NECOCHEA");
+    diccionario.insertar(new Ciudad("VIEDMA","CHUBUT",232456,true), "VIEDMA");
+    diccionario.insertar(new Ciudad("TANDIL","BUENOS AIRES",24564,false), "TANDIL");
+    diccionario.insertar(new Ciudad("PARANA","ENTRE RIOS",247863,false), "PARANA");
+    diccionario.insertar(new Ciudad("RESISTENCIA","CHACO",291720,true), "RESISTENCIA");
+    diccionario.insertar(new Ciudad("ROSARIO","SANTA FE",1194000,true), "ROSARIO");
+    diccionario.insertar(new Ciudad("ANGACO","SAN JUAN",45879,false), "ANGACO");
+    
     }
 
 }

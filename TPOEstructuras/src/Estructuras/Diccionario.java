@@ -285,4 +285,20 @@ public class Diccionario {
         }
         return ciudad;
     }
+
+    public String alfabeticamente() {
+        if (raiz == null) {
+            return "Sin elementos";
+        } else {
+            return alfabeticamenteAux(raiz);
+        }
+    }
+
+    private String alfabeticamenteAux(NodoAVL actual) {
+        if (actual != null) {
+            return alfabeticamenteAux(actual.getHijoIzquierdo()) + actual.getCiudad() + ", " + alfabeticamenteAux(actual.getHijoDerecho());
+        } else {
+            return "";
+        }
+    }
 }
