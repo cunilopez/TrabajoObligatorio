@@ -301,4 +301,37 @@ public class Diccionario {
             return "";
         }
     }
+
+    public String mostrarDiccionario() {
+        if (raiz == null) {
+            return "No hay Elementos..";
+        } else {
+            return mostrarDiccionarioAux(raiz);
+        }
+    }
+
+    private String mostrarDiccionarioAux(NodoAVL actual) {
+        if (actual != null) {
+            return "\n              " + actual.getClave() + 
+                    ((actual.getHijoIzquierdo() != null) ? "\nHI " + actual.getHijoIzquierdo().getClave():"\n") 
+                    + ((actual.getHijoDerecho() != null) ? "                 HD " + actual.getHijoDerecho().getClave() :"")
+                    +"\n----------------------------------"
+                    +mostrarDiccionarioAux(actual.getHijoIzquierdo())
+                    +mostrarDiccionarioAux(actual.getHijoDerecho());
+
+            /*
+            System.out.println("Nodo: " + actual.getClave());
+            if (actual.getHijoIzquierdo() != null) {
+                System.out.print("\nHI: " + actual.getHijoIzquierdo().getClave());
+            }
+            if (actual.getHijoDerecho() != null) {
+                System.out.println("    HD: " + actual.getHijoDerecho().getClave());
+            }
+            System.out.println("\n--------------------------");
+            mostrarDiccionarioAux(actual.getHijoIzquierdo());
+            mostrarDiccionarioAux(actual.getHijoDerecho());*/
+        } else {
+            return "";
+        }
+    }
 }
