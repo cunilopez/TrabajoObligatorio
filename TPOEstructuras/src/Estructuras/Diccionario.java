@@ -296,7 +296,8 @@ public class Diccionario {
 
     private String alfabeticamenteAux(NodoAVL actual) {
         if (actual != null) {
-            return alfabeticamenteAux(actual.getHijoIzquierdo()) + actual.getCiudad() + ", " + alfabeticamenteAux(actual.getHijoDerecho());
+            return alfabeticamenteAux(actual.getHijoIzquierdo()) + actual.getCiudad() 
+                    + "\n" + alfabeticamenteAux(actual.getHijoDerecho());
         } else {
             return "";
         }
@@ -319,17 +320,6 @@ public class Diccionario {
                     +mostrarDiccionarioAux(actual.getHijoIzquierdo())
                     +mostrarDiccionarioAux(actual.getHijoDerecho());
 
-            /*
-            System.out.println("Nodo: " + actual.getClave());
-            if (actual.getHijoIzquierdo() != null) {
-                System.out.print("\nHI: " + actual.getHijoIzquierdo().getClave());
-            }
-            if (actual.getHijoDerecho() != null) {
-                System.out.println("    HD: " + actual.getHijoDerecho().getClave());
-            }
-            System.out.println("\n--------------------------");
-            mostrarDiccionarioAux(actual.getHijoIzquierdo());
-            mostrarDiccionarioAux(actual.getHijoDerecho());*/
         } else {
             return "";
         }
