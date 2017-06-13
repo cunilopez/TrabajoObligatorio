@@ -99,7 +99,32 @@ public class Grafo {
                     }
                 }
             }
-            vertAux=vertAux.getSigVer();
+            vertAux = vertAux.getSigVer();
+        }
+        return seElimino;
+    }
+
+    public boolean eliminarAdyacente(String origen, String destino) {
+        boolean seElimino = false;
+        NodoVer auxVer = ubicarVertice(origen);
+        if (auxVer != null) {
+            NodoAdy auxAdy = auxVer.getPrimerAdy();
+            if (auxAdy != null) {
+                if (auxAdy.getVertice().getElemento().equals(destino)) {
+                    auxVer.setPrimerAdy(auxAdy.getSigAdy());
+                    seElimino = true;
+                } else {
+                    while (auxAdy.getSigAdy() != null && !seElimino) {
+                        if (auxAdy.getSigAdy().getVertice().getElemento().equals(destino)) {
+                            auxAdy.setSigAdy(auxAdy.getSigAdy().getSigAdy());
+                            seElimino = true;
+                        } else {
+                            auxAdy = auxAdy.getSigAdy();
+                        }
+
+                    }
+                }
+            }
         }
         return seElimino;
     }
