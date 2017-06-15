@@ -17,20 +17,16 @@ public class Lista {
         this.raiz = null;
     }
 
-    public boolean insertar(String elemento) {
-        boolean seInserto;
+    public void insertar(String elemento) {
 
         if (raiz == null) {
             this.raiz = new Nodo(elemento);
-            seInserto = true;
         } else {
             Nodo aux = new Nodo(elemento);
             aux.setEnlace(raiz);
             raiz = aux;
-            seInserto = true;
         }
 
-        return seInserto;
     }
 
 }
