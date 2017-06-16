@@ -129,8 +129,63 @@ public class Grafo {
         return seElimino;
     }
     
+    public Lista listarProfundidad() {
+        Lista visitados = new Lista();
+        NodoVer aux = this.inicio;
+        while (aux != null) {
+            if (!visitados.pertenece(aux.getElemento())) {
+                profundidadDesde(aux, visitados);
+            }
+            aux = aux.getSigVer();
+        }
+
+        return visitados;
+    }
+
+    private void profundidadDesde(NodoVer nodov, Lista visitados) {
+        if (nodov != null) {
+            visitados.insertar(nodov.getElemento());
+            NodoAdy ady = nodov.getPrimerAdy();
+            while (ady != null) {
+                if (!visitados.pertenece(ady.getVertice().getElemento())) {
+                    profundidadDesde(ady.getVertice(), visitados);
+                }
+                ady = ady.getSigAdy();
+            }
+        }
+    }
     
-    
-    
+    public boolean existeCamino(String origen, String destino) {
+        boolean existe = false;
+
+        NodoVer o = ubicarVertice(origen);
+        NodoVer d = ubicarVertice(destino);
+
+        if (o != null && d != null) {
+            Lista visitados = new Lista();
+            existe = existeCaminoAux(o, destino, visitados);
+        }
+
+        return existe;
+    }
+
+    private boolean existeCaminoAux(NodoVer origen, String destino, Lista visitados) {
+        boolean existe = false;
+        if (origen != null) {
+            if (origen.getElemento().equals(destino)) {
+                existe = true;
+            } else {
+                visitados.insertar(origen.getElemento());
+                NodoAdy ady = origen.getPrimerAdy();
+                while (!existe && ady != null) {
+                    if (!visitados.pertenece(ady.getVertice().getElemento())) {
+                        existe = existeCaminoAux(ady.getVertice(), destino, visitados);
+                    }
+                    ady = ady.getSigAdy();
+                }
+            }
+        }
+        return existe;
+    }
 
 }

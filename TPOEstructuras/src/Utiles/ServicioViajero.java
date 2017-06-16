@@ -13,13 +13,15 @@ import Estructuras.*;
  * @author Soporte-1
  */
 public class ServicioViajero {
-
+    
     private Diccionario diccionario;
-
+    private Grafo grafo;
+    
     public ServicioViajero() {
         diccionario = new Diccionario();
+        grafo = new Grafo();
     }
-
+    
     public void ingresarServicio() {
         int opcion;
         menu();
@@ -64,11 +66,11 @@ public class ServicioViajero {
                 System.out.println();
                 ingresarServicio();
                 break;
-
+            
         }
-
+        
     }
-
+    
     public void menu() {
         System.out.println("1. Alta y Baja de una Ciudad.");
         System.out.println("2. Alta y Baja de un tramo de ruta.");
@@ -82,9 +84,34 @@ public class ServicioViajero {
         System.out.println("10. Ejecutar script de carga.");
         System.out.println("11. Mostrar estructuras.");
         System.out.println();
-
+        
     }
-
+    
+    public void altaobajaTramo() {
+        int opcion;
+        System.out.println("1. Dar de alta un Tramo.");
+        System.out.println("2. Dar de baja un Tramo.");
+        opcion = TecladoIn.readInt();
+        switch (opcion) {
+            case 1:
+                altaTramo();
+                break;
+            case 2:
+                bajaTramo();
+                break;
+            default:
+                altaobajaTramo();
+                break;
+            
+        }
+    }
+    
+    public void altaTramo() {
+    }
+    
+    public void bajaTramo() {
+    }
+    
     public void altaobaja() {
         int opcion;
         System.out.println("1. Dar de alta a una Ciudad.");
@@ -100,10 +127,10 @@ public class ServicioViajero {
             default:
                 altaobaja();
                 break;
-
+            
         }
     }
-
+    
     public void alta() {
         String ciudad, provincia;
         boolean alojamiento = false;
@@ -126,24 +153,24 @@ public class ServicioViajero {
                     break;
             }
         }
-        if (diccionario.insertar(new Ciudad(ciudad, provincia, habitantes, alojamiento), ciudad)) {
+        if (diccionario.insertar(new Ciudad(ciudad, provincia, habitantes, alojamiento), ciudad) && grafo.insertarVertice(ciudad)) {
             System.out.println("Insertado");
         } else {
             System.out.println("No se pudo Insertar.");
         }
     }
-
+    
     public void baja() {
         String ciudad;
         System.out.println("Ingrese el nombre de la Ciudad a Eliminar");
         ciudad = TecladoIn.readLine().toUpperCase();
-        if (diccionario.eliminar(ciudad)) {
+        if (diccionario.eliminar(ciudad) && grafo.eliminarVertice(ciudad)) {
             System.out.println("Se elimino Correctamente!");
         } else {
             System.out.println("No se encuentra la Ciudad");
         }
     }
-
+    
     public void mostrarAtributos() {
         String aBuscar;
         Ciudad ciudad;
@@ -156,24 +183,79 @@ public class ServicioViajero {
             System.out.println("No se encontro la ciudad.");
         }
     }
-
+    
     public void scriptCarga() {
-        diccionario.insertar(new Ciudad("NEUQUEN", "NEUQUEN", 500000, true), "NEUQUEN");        
-        diccionario.insertar(new Ciudad("POSADAS", "MISIONES", 344833, true), "POSADAS");        
-        diccionario.insertar(new Ciudad("CORDOBA", "CORDOBA", 1391000, false), "CORDOBA");        
-        diccionario.insertar(new Ciudad("USUAHIA", "TIERRA DEL FUEGO", 54546, true), "USUAHIA");   
-        diccionario.insertar(new Ciudad("SALTA", "SALTA", 535303, true), "SALTA");      
+        diccionario.insertar(new Ciudad("NEUQUEN", "NEUQUEN", 500000, true), "NEUQUEN");
+        diccionario.insertar(new Ciudad("POSADAS", "MISIONES", 344833, true), "POSADAS");
+        diccionario.insertar(new Ciudad("CORDOBA", "CORDOBA", 1391000, false), "CORDOBA");
+        diccionario.insertar(new Ciudad("USUAHIA", "TIERRA DEL FUEGO", 54546, true), "USUAHIA");
+        diccionario.insertar(new Ciudad("SALTA", "SALTA", 535303, true), "SALTA");
         diccionario.insertar(new Ciudad("MENDOZA", "MENDOZA", 115041, false), "MENDOZA");
-        diccionario.insertar(new Ciudad("TRELEW", "CHUBUT", 50000, true), "TRELEW");        
-        diccionario.insertar(new Ciudad("CORRIENTES", "CORRIENTES", 654325, true), "CORRIENTES");       
-        diccionario.insertar(new Ciudad("NECOCHEA", "BUENOS AIRES", 416633, false), "NECOCHEA");       
-        diccionario.insertar(new Ciudad("VIEDMA", "CHUBUT", 232456, true), "VIEDMA");        
+        diccionario.insertar(new Ciudad("TRELEW", "CHUBUT", 50000, true), "TRELEW");
+        diccionario.insertar(new Ciudad("CORRIENTES", "CORRIENTES", 654325, true), "CORRIENTES");
+        diccionario.insertar(new Ciudad("NECOCHEA", "BUENOS AIRES", 416633, false), "NECOCHEA");
+        diccionario.insertar(new Ciudad("VIEDMA", "CHUBUT", 232456, true), "VIEDMA");
         diccionario.insertar(new Ciudad("TANDIL", "BUENOS AIRES", 24564, false), "TANDIL");
-        diccionario.insertar(new Ciudad("PARANA", "ENTRE RIOS", 247863, false), "PARANA");        
-        diccionario.insertar(new Ciudad("RESISTENCIA", "CHACO", 291720, true), "RESISTENCIA");        
-        diccionario.insertar(new Ciudad("ROSARIO", "SANTA FE", 1194000, true), "ROSARIO");        
-        diccionario.insertar(new Ciudad("ANGACO", "SAN JUAN", 45879, false), "ANGACO");       
-
+        diccionario.insertar(new Ciudad("PARANA", "ENTRE RIOS", 247863, false), "PARANA");
+        diccionario.insertar(new Ciudad("RESISTENCIA", "CHACO", 291720, true), "RESISTENCIA");
+        diccionario.insertar(new Ciudad("ROSARIO", "SANTA FE", 1194000, true), "ROSARIO");
+        diccionario.insertar(new Ciudad("ANGACO", "SAN JUAN", 45879, false), "ANGACO");
+        grafo.insertarVertice("NEUQUEN");
+        grafo.insertarVertice("POSADAS");
+        grafo.insertarVertice("CORDOBA");
+        grafo.insertarVertice("USUAHIA");
+        grafo.insertarVertice("SALTA");
+        grafo.insertarVertice("MENDOZA");
+        grafo.insertarVertice("TRELEW");
+        grafo.insertarVertice("CORRIENTES");
+        grafo.insertarVertice("NECOCHEA");
+        grafo.insertarVertice("VIEDMA");
+        grafo.insertarVertice("TANDIL");
+        grafo.insertarVertice("PARANA");
+        grafo.insertarVertice("RESISTENCIA");
+        grafo.insertarVertice("ROSARIO");
+        grafo.insertarVertice("ANGACO");
+        
+        grafo.insertarArco("USUAHIA", "TRELEW", 150);
+        
+        grafo.insertarArco("VIEDMA", "NECOCHEA", 700);
+        
+        grafo.insertarArco("TRELEW", "VIEDMA", 30);
+        grafo.insertarArco("TRELEW", "NEUQUEN", 600);
+        grafo.insertarArco("TRELEW", "USUAHIA", 150);
+        
+        grafo.insertarArco("NEUQUEN", "TRELEW", 650);
+        grafo.insertarArco("NEUQUEN", "MENDOZA", 500);
+        grafo.insertarArco("NEUQUEN", "CORDOBA", 800);
+        
+        grafo.insertarArco("CORDOBA", "NECOCHEA", 139);
+        grafo.insertarArco("CORDOBA", "ROSARIO", 160);
+        grafo.insertarArco("CORDOBA", "ANGACO", 111);
+        
+        grafo.insertarArco("MENDOZA", "CORDOBA", 183);
+        
+        grafo.insertarArco("NECOCHEA", "TANDIL", 100);
+        grafo.insertarArco("NECOCHEA", "NEUQUEN", 900);
+        
+        grafo.insertarArco("TANDIL", "PARANA", 33);
+        grafo.insertarArco("TANDIL", "ROSARIO", 99);
+        
+        grafo.insertarArco("ANGACO", "SALTA", 43);
+        
+        grafo.insertarArco("ROSARIO", "CORRIENTES", 25);
+        
+        grafo.insertarArco("POSADAS", "CORRIENTES", 40);
+        
+        grafo.insertarArco("CORRIENTES", "POSADAS", 30);
+        
+        grafo.insertarArco("PARANA", "POSADAS", 68);
+        grafo.insertarArco("PARANA", "ROSARIO", 49);
+        
+        grafo.insertarArco("RESISTENCIA", "SALTA", 60);
+        grafo.insertarArco("RESISTENCIA", "CORRIENTES", 100);
+        
+        grafo.insertarArco("SALTA", "CORDOBA", 222);
+        
     }
-
+    
 }
