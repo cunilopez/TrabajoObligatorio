@@ -296,7 +296,7 @@ public class Diccionario {
 
     private String alfabeticamenteAux(NodoAVL actual) {
         if (actual != null) {
-            return alfabeticamenteAux(actual.getHijoIzquierdo()) + actual.getCiudad() 
+            return alfabeticamenteAux(actual.getHijoIzquierdo()) + actual.getCiudad()
                     + "\n" + alfabeticamenteAux(actual.getHijoDerecho());
         } else {
             return "";
@@ -313,15 +313,35 @@ public class Diccionario {
 
     private String mostrarDiccionarioAux(NodoAVL actual) {
         if (actual != null) {
-            return "\n              " + actual.getClave() + 
-                    ((actual.getHijoIzquierdo() != null) ? "\nHI " + actual.getHijoIzquierdo().getClave():"\n") 
-                    + ((actual.getHijoDerecho() != null) ? "                 HD " + actual.getHijoDerecho().getClave() :"")
-                    +"\n----------------------------------"
-                    +mostrarDiccionarioAux(actual.getHijoIzquierdo())
-                    +mostrarDiccionarioAux(actual.getHijoDerecho());
+            return "\n              " + actual.getClave()
+                    + ((actual.getHijoIzquierdo() != null) ? "\nHI " + actual.getHijoIzquierdo().getClave() : "\n")
+                    + ((actual.getHijoDerecho() != null) ? "                 HD " + actual.getHijoDerecho().getClave() : "")
+                    + "\n----------------------------------"
+                    + mostrarDiccionarioAux(actual.getHijoIzquierdo())
+                    + mostrarDiccionarioAux(actual.getHijoDerecho());
 
         } else {
             return "";
         }
+    }
+
+    public boolean existeCiudad(String clave) {
+        return existeCiudadAux(raiz, clave);
+    }
+
+    private boolean existeCiudadAux(NodoAVL actual, String clave) {
+        boolean existe = false;
+        if (actual != null) {
+            if (!actual.getClave().equals(clave)) {
+                if (actual.getClave().compareTo(clave) > 0) {
+                    existe = existeCiudadAux(actual.getHijoIzquierdo(), clave);
+                } else {
+                    existe = existeCiudadAux(actual.getHijoDerecho(), clave);
+                }
+            } else {
+                existe = true;
+            }
+        }
+        return existe;
     }
 }

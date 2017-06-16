@@ -13,15 +13,15 @@ import Estructuras.*;
  * @author Soporte-1
  */
 public class ServicioViajero {
-    
+
     private Diccionario diccionario;
     private Grafo grafo;
-    
+
     public ServicioViajero() {
         diccionario = new Diccionario();
         grafo = new Grafo();
     }
-    
+
     public void ingresarServicio() {
         int opcion;
         menu();
@@ -33,6 +33,8 @@ public class ServicioViajero {
                 ingresarServicio();
                 break;
             case 2:
+                altaobajaTramo();
+                ingresarServicio();
                 break;
             case 3:
                 mostrarAtributos();
@@ -66,11 +68,11 @@ public class ServicioViajero {
                 System.out.println();
                 ingresarServicio();
                 break;
-            
+
         }
-        
+
     }
-    
+
     public void menu() {
         System.out.println("1. Alta y Baja de una Ciudad.");
         System.out.println("2. Alta y Baja de un tramo de ruta.");
@@ -84,9 +86,9 @@ public class ServicioViajero {
         System.out.println("10. Ejecutar script de carga.");
         System.out.println("11. Mostrar estructuras.");
         System.out.println();
-        
+
     }
-    
+
     public void altaobajaTramo() {
         int opcion;
         System.out.println("1. Dar de alta un Tramo.");
@@ -102,16 +104,44 @@ public class ServicioViajero {
             default:
                 altaobajaTramo();
                 break;
-            
+
         }
     }
-    
+
     public void altaTramo() {
+        String origen, destino;
+        int kilometros;
+        System.out.println("Ingrese el origen del tramo de Ruta.");
+        origen = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese el destino del tramo de Ruta");
+        destino = TecladoIn.readLine().toUpperCase();
+        if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
+            System.out.println("Ingrese la cantidad de kilometros que hay entre estas Ciudades.");
+            kilometros = TecladoIn.readInt();
+            if (kilometros >= 0) {
+                grafo.insertarArco(origen, destino, kilometros);
+            } else {
+                System.out.println("Ingresó un numero negativo.");
+            }
+        } else {
+            System.out.println("El orgien o el destino no se encuentran en las estructuras.");
+        }
     }
-    
+
     public void bajaTramo() {
+        String origen, destino;
+        System.out.println("Ingrese el Origen del tramo de Ruta.");
+        origen = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese el destino del tramo de Ruta");
+        destino = TecladoIn.readLine().toUpperCase();
+        if (grafo.eliminarAdyacente(origen, destino)) {
+            System.out.println("Se elimino el tramo de ruta.");
+        } else {
+            System.out.println("No se pudo eliminar tramo.");
+        }
+
     }
-    
+
     public void altaobaja() {
         int opcion;
         System.out.println("1. Dar de alta a una Ciudad.");
@@ -127,10 +157,10 @@ public class ServicioViajero {
             default:
                 altaobaja();
                 break;
-            
+
         }
     }
-    
+
     public void alta() {
         String ciudad, provincia;
         boolean alojamiento = false;
@@ -159,7 +189,7 @@ public class ServicioViajero {
             System.out.println("No se pudo Insertar.");
         }
     }
-    
+
     public void baja() {
         String ciudad;
         System.out.println("Ingrese el nombre de la Ciudad a Eliminar");
@@ -170,7 +200,7 @@ public class ServicioViajero {
             System.out.println("No se encuentra la Ciudad");
         }
     }
-    
+
     public void mostrarAtributos() {
         String aBuscar;
         Ciudad ciudad;
@@ -183,7 +213,7 @@ public class ServicioViajero {
             System.out.println("No se encontro la ciudad.");
         }
     }
-    
+
     public void scriptCarga() {
         diccionario.insertar(new Ciudad("NEUQUEN", "NEUQUEN", 500000, true), "NEUQUEN");
         diccionario.insertar(new Ciudad("POSADAS", "MISIONES", 344833, true), "POSADAS");
@@ -215,47 +245,47 @@ public class ServicioViajero {
         grafo.insertarVertice("RESISTENCIA");
         grafo.insertarVertice("ROSARIO");
         grafo.insertarVertice("ANGACO");
-        
+
         grafo.insertarArco("USUAHIA", "TRELEW", 150);
-        
+
         grafo.insertarArco("VIEDMA", "NECOCHEA", 700);
-        
+
         grafo.insertarArco("TRELEW", "VIEDMA", 30);
         grafo.insertarArco("TRELEW", "NEUQUEN", 600);
         grafo.insertarArco("TRELEW", "USUAHIA", 150);
-        
+
         grafo.insertarArco("NEUQUEN", "TRELEW", 650);
         grafo.insertarArco("NEUQUEN", "MENDOZA", 500);
         grafo.insertarArco("NEUQUEN", "CORDOBA", 800);
-        
+
         grafo.insertarArco("CORDOBA", "NECOCHEA", 139);
         grafo.insertarArco("CORDOBA", "ROSARIO", 160);
         grafo.insertarArco("CORDOBA", "ANGACO", 111);
-        
+
         grafo.insertarArco("MENDOZA", "CORDOBA", 183);
-        
+
         grafo.insertarArco("NECOCHEA", "TANDIL", 100);
         grafo.insertarArco("NECOCHEA", "NEUQUEN", 900);
-        
+
         grafo.insertarArco("TANDIL", "PARANA", 33);
         grafo.insertarArco("TANDIL", "ROSARIO", 99);
-        
+
         grafo.insertarArco("ANGACO", "SALTA", 43);
-        
+
         grafo.insertarArco("ROSARIO", "CORRIENTES", 25);
-        
+
         grafo.insertarArco("POSADAS", "CORRIENTES", 40);
-        
+
         grafo.insertarArco("CORRIENTES", "POSADAS", 30);
-        
+
         grafo.insertarArco("PARANA", "POSADAS", 68);
         grafo.insertarArco("PARANA", "ROSARIO", 49);
-        
+
         grafo.insertarArco("RESISTENCIA", "SALTA", 60);
         grafo.insertarArco("RESISTENCIA", "CORRIENTES", 100);
-        
+
         grafo.insertarArco("SALTA", "CORDOBA", 222);
-        
+
     }
-    
+
 }
