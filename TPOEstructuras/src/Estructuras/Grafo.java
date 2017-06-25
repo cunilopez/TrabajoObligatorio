@@ -58,7 +58,7 @@ public class Grafo {
 
     public boolean eliminarVertice(String elemento) {
         boolean seElimino = false;
-        NodoVer anterior = inicio;
+        NodoVer anterior = inicio; //SI EL PRIMERO ES NULO LA PASAS A CAGAR CREO :O
         if (anterior.getElemento().equals(elemento)) {
             inicio = inicio.getSigVer();
             seElimino = true;
@@ -86,6 +86,12 @@ public class Grafo {
             adyAux = vertAux.getPrimerAdy();
             if (adyAux != null) {
                 if (adyAux.getVertice().getElemento().equals(elemento)) {
+                    /*
+                    Suponete que el vertice es el A y tiene como primer elemennto de la lista de ady al elemento que vos queres eliminar
+                    
+                    Lo que creo que es lo correcto para mi es:
+                    vertAux.setPrimerAdy(adyAux.getSigAdy());
+                    */
                     adyAux.setSigAdy(adyAux.getSigAdy());
                     seElimino = true;
                 } else {
