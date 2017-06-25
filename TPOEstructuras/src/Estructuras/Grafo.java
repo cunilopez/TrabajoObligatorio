@@ -63,7 +63,7 @@ public class Grafo {
             inicio = inicio.getSigVer();
             seElimino = true;
         } else {
-            while (anterior.getSigVer() != null && !seElimino) {
+            while (anterior.getSigVer() != null && !seElimino) { // aca en mi codigo saque el && !seElimino porque si tiene dos arcos al mismo nodo tambien la pasas a cagar :3
                 if (anterior.getSigVer().getElemento().equals(elemento)) {
                     anterior.setSigVer(anterior.getSigVer().getSigVer());
                     seElimino = true;
