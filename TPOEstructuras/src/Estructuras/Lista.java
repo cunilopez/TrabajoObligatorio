@@ -18,15 +18,36 @@ public class Lista {
     }
 
     public void insertar(String elemento) {
-
-        if (cabecera == null) {
-            this.cabecera = new Nodo(elemento);
+        Nodo aux = cabecera;
+        if (aux != null) {
+            while (aux.getEnlace() != null) {
+                aux = aux.getEnlace();
+            }
+            aux.setEnlace(new Nodo(elemento));
         } else {
-            Nodo aux = new Nodo(elemento);
-            aux.setEnlace(cabecera);
-            cabecera = aux;
+            cabecera = new Nodo(elemento);
         }
 
+    }
+
+    public boolean insertar(String elem, int pos) {
+        boolean seInserto = false;
+        if (pos >= 1 || pos <= this.longitud() + 1) {
+            if (pos != 1) {
+                Nodo aux = cabecera;
+                int i = 1;
+                while (i < pos - 1) {
+                    i++;
+                    aux = aux.getEnlace();
+                }
+                aux.setEnlace(new Nodo(elem, aux.getEnlace()));
+                seInserto = true;
+            } else {
+                cabecera = new Nodo(elem, this.cabecera);
+                seInserto = true;
+            }
+        }
+        return seInserto;
     }
 
     public boolean esVacia() {
@@ -78,6 +99,16 @@ public class Lista {
             }
         }
         return pertenece;
+    }
+
+    public Lista clonar() {
+        Lista clon = new Lista();
+        Nodo aux = cabecera;
+        while (aux != null) {
+            clon.insertar(aux.getElemento());
+            aux = aux.getEnlace();
+        }
+        return clon;
     }
 
     @Override

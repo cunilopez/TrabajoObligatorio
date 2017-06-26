@@ -41,14 +41,20 @@ public class ServicioViajero {
                 ingresarServicio();
                 break;
             case 4:
+                listarRango();
+                ingresarServicio();
                 break;
             case 5:
                 break;
             case 6:
                 break;
             case 7:
+                caminoMenorCiudades();
+                ingresarServicio();
                 break;
             case 8:
+                caminoAlojamiento();
+                ingresarServicio();
                 break;
             case 9:
                 System.out.println(diccionario.alfabeticamente());
@@ -61,6 +67,8 @@ public class ServicioViajero {
             case 11:
                 System.out.println("El arbol es el siguiente...\n");
                 System.out.println(diccionario.mostrarDiccionario());
+                System.out.println("El grafo es el siguiente...\n");
+                System.out.println(grafo.toString());
                 ingresarServicio();
                 break;
             default:
@@ -87,6 +95,33 @@ public class ServicioViajero {
         System.out.println("11. Mostrar estructuras.");
         System.out.println();
 
+    }
+
+    public void listarRango() {
+        String inicio, fin;
+        System.out.println("Ingrese el inicio del rango.");
+        inicio = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese el fin del rango.");
+        fin = TecladoIn.readLine().toUpperCase();
+        System.out.println(diccionario.listarClavesRango(inicio, fin).toString());
+    }
+
+    public void caminoAlojamiento() {
+        String partida, llegada;
+        System.out.println("Ingrese la Ciudad de Partida");
+        partida = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese Ciudad donde desea llegar");
+        llegada = TecladoIn.readLine().toUpperCase();
+        System.out.println(grafo.caminoConAlojamiento(partida, llegada, diccionario).toString());
+    }
+
+    public void caminoMenorCiudades() {
+        String partida, llegada;
+        System.out.println("Ingrese la Ciudad de Partida");
+        partida = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese Ciudad donde desea llegar");
+        llegada = TecladoIn.readLine().toUpperCase();
+        System.out.println(grafo.caminoMenorCantCiudades(partida, llegada).toString());
     }
 
     public void altaobajaTramo() {

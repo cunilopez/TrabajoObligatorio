@@ -344,4 +344,30 @@ public class Diccionario {
         }
         return existe;
     }
+    
+    public Lista listarClavesRango(String inicio, String fin) {
+        Lista lista = new Lista();
+        if (raiz != null) {
+            listarClavesRangoAux(lista, raiz, inicio, fin);
+        }
+        return lista;
+    }
+
+    private void listarClavesRangoAux(Lista lista, NodoAVL raizActual, String inicio, String fin) {
+        if (inicio.compareTo(raizActual.getClave()) < 0) {
+            if (raizActual.getHijoIzquierdo() != null) {
+                listarClavesRangoAux(lista, raizActual.getHijoIzquierdo(), inicio, fin);
+            }
+        }
+        if (raizActual.getClave().compareTo(inicio) >= 0 && raizActual.getClave().compareTo(fin) <= 0) {
+            lista.insertar(raizActual.getClave());
+        }
+
+        if (fin.compareTo(raizActual.getClave()) > 0) {
+            if (raizActual.getHijoDerecho() != null) {
+                listarClavesRangoAux(lista, raizActual.getHijoDerecho(), inicio, fin);
+            }
+        }
+    }
+
 }

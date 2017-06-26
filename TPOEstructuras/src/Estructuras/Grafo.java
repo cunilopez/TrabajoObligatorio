@@ -43,7 +43,7 @@ public class Grafo {
             if (destino != null) {
                 NodoAdy adyacente = origen.getPrimerAdy();
                 if (adyacente != null) {
-                    while (adyacente != null) {
+                    while (adyacente.getSigAdy() != null) {
                         adyacente = adyacente.getSigAdy();
                     }
                     adyacente.setSigAdy(new NodoAdy(destino, etiqueta, null));
@@ -59,40 +59,39 @@ public class Grafo {
     public boolean eliminarVertice(String elemento) {
         boolean seElimino = false;
         NodoVer anterior = inicio;
-        if (anterior.getElemento().equals(elemento)) {
-            inicio = inicio.getSigVer();
-            seElimino = true;
-        } else {
-            while (anterior.getSigVer() != null && !seElimino) {
-                if (anterior.getSigVer().getElemento().equals(elemento)) {
-                    anterior.setSigVer(anterior.getSigVer().getSigVer());
-                    seElimino = true;
-                } else {
-                    anterior = anterior.getSigVer();
+        if (anterior != null) {
+            if (anterior.getElemento().equals(elemento)) {
+                inicio = inicio.getSigVer();
+                seElimino = true;
+            } else {
+                while (anterior.getSigVer() != null && !seElimino) {
+                    if (anterior.getSigVer().getElemento().equals(elemento)) {
+                        anterior.setSigVer(anterior.getSigVer().getSigVer());
+                        seElimino = true;
+                    } else {
+                        anterior = anterior.getSigVer();
+                    }
                 }
             }
-        }
-        if (seElimino) {
-            eliminarAdyacentesAlVertice(elemento);
+            if (seElimino) {
+                eliminarAdyacentesAlVertice(elemento);
+            }
         }
         return seElimino;
     }
 
-    private boolean eliminarAdyacentesAlVertice(String elemento) {
-        boolean seElimino = false;
+    private void eliminarAdyacentesAlVertice(String elemento) {
         NodoVer vertAux = inicio;
         NodoAdy adyAux;
         while (vertAux != null) {
             adyAux = vertAux.getPrimerAdy();
             if (adyAux != null) {
                 if (adyAux.getVertice().getElemento().equals(elemento)) {
-                    adyAux.setSigAdy(adyAux.getSigAdy());
-                    seElimino = true;
+                    vertAux.setPrimerAdy(adyAux.getSigAdy());
                 } else {
-                    while (adyAux.getSigAdy() != null && !seElimino) {
+                    while (adyAux.getSigAdy() != null) {
                         if (adyAux.getSigAdy().getVertice().getElemento().equals(elemento)) {
                             adyAux.setSigAdy(adyAux.getSigAdy().getSigAdy());
-                            seElimino = true;
                         } else {
                             adyAux = adyAux.getSigAdy();
                         }
@@ -101,7 +100,7 @@ public class Grafo {
             }
             vertAux = vertAux.getSigVer();
         }
-        return seElimino;
+
     }
 
     public boolean eliminarAdyacente(String origen, String destino) {
@@ -128,7 +127,7 @@ public class Grafo {
         }
         return seElimino;
     }
-    
+
     public Lista listarProfundidad() {
         Lista visitados = new Lista();
         NodoVer aux = this.inicio;
@@ -154,7 +153,7 @@ public class Grafo {
             }
         }
     }
-    
+
     public boolean existeCamino(String origen, String destino) {
         boolean existe = false;
 
@@ -186,6 +185,125 @@ public class Grafo {
             }
         }
         return existe;
+    }
+
+    public Lista caminoMenorCantCiudades(String partida, String llegada) {
+        Lista visitados = new Lista();
+        Lista menor = new Lista();
+        NodoVer vPartida = ubicarVertice(partida);
+        NodoVer vLlegada = ubicarVertice(llegada);
+        if (vPartida != null && vLlegada != null) {
+            menor = caminoMenorCantCiudadesAux(vPartida, visitados, menor, llegada);
+        }
+        return menor;
+    }
+
+    private Lista caminoMenorCantCiudadesAux(NodoVer partida, Lista visitados, Lista menor, String llegada) {
+        NodoAdy aux;
+        Lista menorAux;
+        if (!visitados.pertenece(partida.getElemento())) {
+            visitados.insertar(partida.getElemento(), visitados.longitud() + 1);
+            if (partida.getElemento().equals(llegada)) {
+                if (menor.esVacia()) {
+                    menor = visitados.clonar();
+                } else {
+                    if (visitados.longitud() < menor.longitud()) {
+                        menor = visitados.clonar();
+                    }
+                }
+            } else {
+                aux = partida.getPrimerAdy();
+                while (aux != null) {
+                    menorAux = caminoMenorCantCiudadesAux(aux.getVertice(), visitados, menor, llegada);
+                    if (!menorAux.esVacia()) {
+                        if (!menor.esVacia()) {
+                            if (menorAux.longitud() < menor.longitud()) {
+                                menor = menorAux.clonar();
+                            }
+                        } else {
+                            menor = menorAux.clonar();
+                        }
+                    }
+                    aux = aux.getSigAdy();
+                }
+            }
+            visitados.eliminar(visitados.longitud());
+        }
+        return menor;
+    }
+
+    public Lista caminoConAlojamiento(String partida, String llegada, Diccionario dicc) {
+        Lista visitados = new Lista();
+        Lista menor = new Lista();
+        NodoVer vPartida = ubicarVertice(partida);
+        NodoVer vLlegada = ubicarVertice(llegada);
+        if (vPartida != null && vLlegada != null) {
+            menor = caminoConAlojamientoAux(vPartida, visitados, menor, llegada, dicc);
+        }
+        return menor;
+    }
+
+    private Lista caminoConAlojamientoAux(NodoVer partida, Lista visitados, Lista menor, String llegada, Diccionario dicc) {
+        NodoAdy auxAdy;
+        Lista menorAux;
+        boolean alojActual;
+        if (!visitados.pertenece(partida.getElemento())) {
+            visitados.insertar(partida.getElemento(), visitados.longitud() + 1);
+            if (partida.getElemento().equals(llegada)) {
+                if (menor.esVacia()) {
+                    menor = visitados.clonar();
+                } else {
+                    if (visitados.longitud() < menor.longitud()) {
+                        menor = visitados.clonar();
+                    }
+                }
+            } else {
+                auxAdy = partida.getPrimerAdy();
+                while (auxAdy != null) {
+                    alojActual = dicc.recuperarElemento(auxAdy.getVertice().getElemento()).tieneAlojamiento();
+                    if (alojActual || auxAdy.getVertice().getElemento().equals(llegada)) {
+                        menorAux = caminoConAlojamientoAux(auxAdy.getVertice(), visitados, menor, llegada, dicc);
+                        if (!menorAux.esVacia()) {
+                            if (!menor.esVacia()) {
+                                if (menorAux.longitud() < menor.longitud()) {
+                                    menor = menorAux.clonar();
+                                }
+                            } else {
+                                menor = menorAux.clonar();
+                            }
+                        }
+                    }
+                    auxAdy = auxAdy.getSigAdy();
+                }
+            }
+            visitados.eliminar(visitados.longitud());
+        }
+        return menor;
+    }
+
+    public String toString() {
+        String cad = "";
+        NodoVer auxVert = inicio;
+        NodoAdy auxAdy;
+        if (auxVert != null) {
+            while (auxVert != null) {
+                cad = cad + "\n----------------------------------------"
+                        + "\n Ciudad: " + auxVert.getElemento();
+                auxAdy = auxVert.getPrimerAdy();
+                if (auxAdy != null) {
+                    while (auxAdy != null) {
+                        cad = cad + "\n conectado con: " + auxAdy.getVertice().getElemento() + " a: " + auxAdy.getEtiqueta() + " km de distancia.";
+                        auxAdy = auxAdy.getSigAdy();
+                    }
+                } else {
+                    cad = cad + "\n Sin rutas!";
+                }
+                auxVert = auxVert.getSigVer();
+            }
+        } else {
+            cad = "Vacio!";
+        }
+        return cad;
     }
 
 }

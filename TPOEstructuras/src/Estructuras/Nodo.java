@@ -10,13 +10,18 @@ package Estructuras;
  * @author Soporte-1
  */
 public class Nodo {
-    
+
     Nodo enlace;
     String elemento;
 
     public Nodo(String elemento) {
         this.elemento = elemento;
-        this.enlace= null;
+        this.enlace = null;
+    }
+
+    public Nodo(String elemento, Nodo enlace) {
+        this.elemento = elemento;
+        this.enlace = enlace;
     }
 
     public Nodo getEnlace() {
@@ -34,9 +39,5 @@ public class Nodo {
     public void setElemento(String elemento) {
         this.elemento = elemento;
     }
-    
-    
-    
-    
-    
+
 }
