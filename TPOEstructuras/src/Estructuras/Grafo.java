@@ -36,21 +36,31 @@ public class Grafo {
     }
 
     public boolean insertarArco(String ori, String des, double etiqueta) {
-        boolean seInserto = false;
+        boolean seInserto = false, existe = false;
         NodoVer origen = ubicarVertice(ori);
         if (origen != null) {
             NodoVer destino = ubicarVertice(des);
             if (destino != null) {
                 NodoAdy adyacente = origen.getPrimerAdy();
                 if (adyacente != null) {
-                    while (adyacente.getSigAdy() != null) {
-                        adyacente = adyacente.getSigAdy();
+                    if (adyacente.getVertice().getElemento().equals(des)) {
+                        existe = true;
                     }
-                    adyacente.setSigAdy(new NodoAdy(destino, etiqueta, null));
+                    while (adyacente.getSigAdy() != null && !existe) {
+                        adyacente = adyacente.getSigAdy();
+                        if (adyacente.getVertice().getElemento().equals(des)) {
+                            existe = true;
+                        }
+                    }
+                    if (!existe) {
+                        adyacente.setSigAdy(new NodoAdy(destino, etiqueta, null));
+                        seInserto = true;
+                    }
                 } else {
                     origen.setPrimerAdy(new NodoAdy(destino, etiqueta, null));
+                    seInserto = true;
                 }
-                seInserto = true;
+
             }
         }
         return seInserto;

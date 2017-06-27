@@ -32,10 +32,10 @@ public class Lista {
 
     public boolean insertar(String elem, int pos) {
         boolean seInserto = false;
-        if (pos >= 1 || pos <= this.longitud() + 1) {
-            if (pos != 1) {
+        if (pos >= 0 || pos <= this.longitud() + 1) {
+            if (pos != 0) {
                 Nodo aux = cabecera;
-                int i = 1;
+                int i = 0;
                 while (i < pos - 1) {
                     i++;
                     aux = aux.getEnlace();
@@ -56,10 +56,10 @@ public class Lista {
 
     public boolean eliminar(int pos) {
         boolean seElimino = false;
-        if (pos >= 1 && pos <= this.longitud()) {
-            if (pos != 1) {
+        if (pos >= 0 && pos <= this.longitud()) {
+            if (pos != 0) {
                 Nodo aux = cabecera;
-                int i = 1;
+                int i = 0;
                 while (i < pos - 1) {
                     i++;
                     aux = aux.getEnlace();
@@ -86,6 +86,21 @@ public class Lista {
         }
 
         return longitud;
+    }
+
+    public int getPos(String elemento) {
+        int pos = -1, cont = 0;
+        boolean bandera = false;
+        Nodo aux = this.cabecera;
+        while (!bandera && aux != null) {
+            if (aux.getElemento().equals(elemento)) {
+                pos = cont;
+                bandera = true;
+            }
+            cont++;
+            aux = aux.getEnlace();
+        }
+        return pos;
     }
 
     public boolean pertenece(String elem) {
@@ -116,7 +131,7 @@ public class Lista {
         String cad = "";
         if (!esVacia()) {
             Nodo aux = cabecera;
-            for (int i = 1; i <= this.longitud(); i++) {
+            for (int i = 0; i <= this.longitud(); i++) {
                 cad = cad + aux.getElemento() + " ";
                 aux = aux.getEnlace();
             }
