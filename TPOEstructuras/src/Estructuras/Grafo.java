@@ -213,6 +213,7 @@ public class Grafo {
         Lista menorAux;
         if (!visitados.pertenece(partida.getElemento())) {
             visitados.insertar(partida.getElemento());
+
             if (partida.getElemento().equals(llegada)) {
                 if (menor.esVacia()) {
                     menor = visitados.clonar();
@@ -224,20 +225,24 @@ public class Grafo {
             } else {
                 aux = partida.getPrimerAdy();
                 while (aux != null) {
-                    menorAux = caminoMenorCantCiudadesAux(aux.getVertice(), visitados, menor, llegada);
-                    if (!menorAux.esVacia()) {
-                        if (!menor.esVacia()) {
-                            if (menorAux.longitud() < menor.longitud()) {
+                    if (visitados.longitud() < menor.longitud()||menor.esVacia()) {
+                        menorAux = caminoMenorCantCiudadesAux(aux.getVertice(), visitados, menor, llegada);
+                        if (!menorAux.esVacia()) {
+                            if (!menor.esVacia()) {
+                                if (menorAux.longitud() < menor.longitud()) {
+                                    menor = menorAux.clonar();
+                                }
+                            } else {
                                 menor = menorAux.clonar();
                             }
-                        } else {
-                            menor = menorAux.clonar();
                         }
                     }
+
                     aux = aux.getSigAdy();
                 }
             }
             visitados.eliminar(visitados.longitud());
+
         }
         return menor;
     }
@@ -257,6 +262,7 @@ public class Grafo {
         NodoAdy auxAdy;
         Lista menorAux;
         boolean alojActual;
+
         if (!visitados.pertenece(partida.getElemento())) {
             visitados.insertar(partida.getElemento());
             if (partida.getElemento().equals(llegada)) {
@@ -287,6 +293,7 @@ public class Grafo {
                 }
             }
             visitados.eliminar(visitados.longitud());
+
         }
         return menor;
     }
@@ -346,9 +353,9 @@ public class Grafo {
             }
 
             int posActual = 0;
-            int posModificar ;
-            int posAnterior ;
-            double nuevaDistancia ;
+            int posModificar;
+            int posAnterior;
+            double nuevaDistancia;
             elemActual = origen; // ORIGEN!!!
             distancia[vertices.getPos(elemActual)] = 0;
             anterior[vertices.getPos(elemActual)] = null;
@@ -359,8 +366,8 @@ public class Grafo {
                     if (!visitados.pertenece(elemActual)) {
                         posModificar = vertices.getPos(auxAdy.getVertice().getElemento());
                         //posAnterior = vertices.getPos(vertices.recuperar(posActual-1));
-                        posAnterior = (getRefVertice(anterior[posModificar]) == null) ? vertices.getPos(elemActual) : 
-                                vertices.getPos(getRefVertice(anterior[posModificar]).getElemento());
+                        posAnterior = (getRefVertice(anterior[posModificar]) == null) ? vertices.getPos(elemActual)
+                                : vertices.getPos(getRefVertice(anterior[posModificar]).getElemento());
                         nuevaDistancia = auxAdy.getEtiqueta() + distancia[posAnterior];
                         if (distancia[posModificar] > nuevaDistancia) {
                             distancia[posModificar] = nuevaDistancia;
