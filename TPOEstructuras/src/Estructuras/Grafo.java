@@ -354,7 +354,7 @@ public class Grafo {
 
             int posActual = 0;
             int posModificar;
-            int posAnterior;
+            int posDeDondeSaleArco;
             double nuevaDistancia;
             elemActual = origen; // ORIGEN!!!
             distancia[vertices.getPos(elemActual)] = 0;
@@ -366,9 +366,8 @@ public class Grafo {
                     if (!visitados.pertenece(elemActual)) {
                         posModificar = vertices.getPos(auxAdy.getVertice().getElemento());
                         //posAnterior = vertices.getPos(vertices.recuperar(posActual-1));
-                        posAnterior = (getRefVertice(anterior[posModificar]) == null) ? vertices.getPos(elemActual)
-                                : vertices.getPos(getRefVertice(anterior[posModificar]).getElemento());
-                        nuevaDistancia = auxAdy.getEtiqueta() + distancia[posAnterior];
+                        posDeDondeSaleArco = vertices.getPos(elemActual);
+                        nuevaDistancia = auxAdy.getEtiqueta() + distancia[posDeDondeSaleArco];
                         if (distancia[posModificar] > nuevaDistancia) {
                             distancia[posModificar] = nuevaDistancia;
                             anterior[posModificar] = elemActual;
