@@ -212,7 +212,7 @@ public class Grafo {
         NodoAdy aux;
         Lista menorAux;
         if (!visitados.pertenece(partida.getElemento())) {
-            visitados.insertar(partida.getElemento(), visitados.longitud() + 1);
+            visitados.insertar(partida.getElemento());
             if (partida.getElemento().equals(llegada)) {
                 if (menor.esVacia()) {
                     menor = visitados.clonar();
@@ -258,7 +258,7 @@ public class Grafo {
         Lista menorAux;
         boolean alojActual;
         if (!visitados.pertenece(partida.getElemento())) {
-            visitados.insertar(partida.getElemento(), visitados.longitud() + 1);
+            visitados.insertar(partida.getElemento());
             if (partida.getElemento().equals(llegada)) {
                 if (menor.esVacia()) {
                     menor = visitados.clonar();
@@ -291,6 +291,7 @@ public class Grafo {
         return menor;
     }
 
+    @Override
     public String toString() {
         String cad = "";
         NodoVer auxVert = inicio;
@@ -316,4 +317,87 @@ public class Grafo {
         return cad;
     }
 
+    public Lista dijkstra(String origen, String destino) {
+        Lista camino = null, visitados, vertices;
+        NodoVer auxVert;
+        NodoAdy auxAdy;
+        String elemActual;
+        String[] anterior;
+        double[] distancia;
+        int cantElementos;
+
+        if (this.inicio != null) {//Si el grafo esta vacio, return null
+            visitados = new Lista();
+            vertices = new Lista();
+            auxVert = this.inicio;
+
+            while (auxVert != null) {
+                elemActual = auxVert.getElemento();
+                vertices.insertar(elemActual);
+                auxVert = auxVert.getSigVer();
+            }
+
+            cantElementos = vertices.longitud();
+            anterior = new String[cantElementos];
+            distancia = new double[cantElementos];
+            for (int i = 0; i < cantElementos; i++) {
+                distancia[i] = Integer.MAX_VALUE;
+                anterior[i] = null;
+            }
+
+            int posActual = 0;
+            int posModificar ;
+            int posAnterior ;
+            double nuevaDistancia ;
+            elemActual = origen; // ORIGEN!!!
+            distancia[vertices.getPos(elemActual)] = 0;
+            anterior[vertices.getPos(elemActual)] = null;
+            while (posActual < cantElementos) {
+                //elemActual = vertices.recuperar(posActual);
+                auxAdy = getRefVertice(elemActual).getPrimerAdy();
+                while (auxAdy != null) {
+                    if (!visitados.pertenece(elemActual)) {
+                        posModificar = vertices.getPos(auxAdy.getVertice().getElemento());
+                        //posAnterior = vertices.getPos(vertices.recuperar(posActual-1));
+                        posAnterior = (getRefVertice(anterior[posModificar]) == null) ? vertices.getPos(elemActual) : 
+                                vertices.getPos(getRefVertice(anterior[posModificar]).getElemento());
+                        nuevaDistancia = auxAdy.getEtiqueta() + distancia[posAnterior];
+                        if (distancia[posModificar] > nuevaDistancia) {
+                            distancia[posModificar] = nuevaDistancia;
+                            anterior[posModificar] = elemActual;
+                        }
+                        auxAdy = auxAdy.getSigAdy();
+                    } else {
+                        auxAdy = auxAdy.getSigAdy();
+                    }
+                }
+                visitados.insertar(elemActual);
+
+                posActual++;
+                elemActual = vertices.recuperar(posActual);
+            }
+
+            for (int i = 0; i < distancia.length; i++) {
+                System.out.println("Vert: " + vertices.recuperar(i) + "\tDist: " + distancia[i] + "\tPrev: " + anterior[i]);
+            }
+        }
+
+        return camino;
+    }
+
+    private NodoVer getRefVertice(String elem) {
+        NodoVer buscado = null;
+        NodoVer auxVert = this.inicio;
+        boolean corte = false;
+
+        while (!corte && auxVert != null) {
+            if (auxVert.getElemento().equals(elem)) {
+                corte = true;
+                buscado = auxVert;
+            }
+            auxVert = auxVert.getSigVer();
+        }
+
+        return buscado;
+    }
 }

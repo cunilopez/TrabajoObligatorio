@@ -45,6 +45,8 @@ public class ServicioViajero {
                 ingresarServicio();
                 break;
             case 5:
+                caminoMasCorto();
+                ingresarServicio();
                 break;
             case 6:
                 break;
@@ -96,6 +98,16 @@ public class ServicioViajero {
         System.out.println();
 
     }
+
+    public void caminoMasCorto() {
+        String origen, destino;
+        System.out.println("Ingrese la Ciudad de Origen.");
+        origen = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese el Destino");
+        destino = TecladoIn.readLine().toUpperCase();
+        System.out.println(grafo.dijkstra(origen, destino));
+    }
+    
 
     public void listarRango() {
         String inicio, fin;

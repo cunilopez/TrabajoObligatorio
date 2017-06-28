@@ -44,4 +44,8 @@ public class NodoAdy {
         this.sigAdy = sigAdy;
     }
     
+    @Override
+    public String toString(){//para debug.
+    return this.vertice.getElemento();
+    }
 }

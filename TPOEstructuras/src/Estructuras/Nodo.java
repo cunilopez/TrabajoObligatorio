@@ -40,4 +40,9 @@ public class Nodo {
         this.elemento = elemento;
     }
 
+    @Override
+    public String toString() {//debug
+        return this.elemento;
+    }
+
 }

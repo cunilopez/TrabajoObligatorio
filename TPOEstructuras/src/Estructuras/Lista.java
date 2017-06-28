@@ -32,7 +32,7 @@ public class Lista {
 
     public boolean insertar(String elem, int pos) {
         boolean seInserto = false;
-        if (pos >= 0 || pos <= this.longitud() + 1) {
+        if (pos >= 0 || pos < this.longitud() + 1) {
             if (pos != 0) {
                 Nodo aux = cabecera;
                 int i = 0;
@@ -56,16 +56,17 @@ public class Lista {
 
     public boolean eliminar(int pos) {
         boolean seElimino = false;
-        if (pos >= 0 && pos <= this.longitud()) {
-            if (pos != 0) {
+        if (pos >= 1 && pos < this.longitud() + 1) {
+            if (pos != 1) {
                 Nodo aux = cabecera;
                 int i = 0;
-                while (i < pos - 1) {
+                while (i < pos - 2) {
                     i++;
                     aux = aux.getEnlace();
                 }
                 aux.setEnlace(aux.getEnlace().getEnlace());
                 seElimino = true;
+
             } else {
                 cabecera = cabecera.getEnlace();
                 seElimino = true;
@@ -131,7 +132,7 @@ public class Lista {
         String cad = "";
         if (!esVacia()) {
             Nodo aux = cabecera;
-            for (int i = 0; i <= this.longitud(); i++) {
+            for (int i = 0; i < this.longitud(); i++) {
                 cad = cad + aux.getElemento() + " ";
                 aux = aux.getEnlace();
             }
@@ -140,5 +141,27 @@ public class Lista {
         }
 
         return cad;
+    }
+
+    public String recuperar(int pos) {
+        String elem = "";
+        if (cabecera != null && (pos > 0 || pos <= this.longitud())) {
+            if (pos == 0) {
+                elem = cabecera.getElemento();
+            } else {
+                Nodo aux = cabecera;
+                int cont = 0;
+                while (aux != null) {
+                    if (cont != pos) {
+                        aux = aux.getEnlace();
+                        cont++;
+                    } else {
+                        elem = aux.getElemento();
+                        aux = null;
+                    }
+                }
+            }
+        }
+        return elem;
     }
 }
