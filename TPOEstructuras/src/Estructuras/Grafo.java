@@ -225,7 +225,7 @@ public class Grafo {
             } else {
                 aux = partida.getPrimerAdy();
                 while (aux != null) {
-                    if (visitados.longitud() < menor.longitud()||menor.esVacia()) {
+                    if (visitados.longitud() < menor.longitud() || menor.esVacia()) {
                         menorAux = caminoMenorCantCiudadesAux(aux.getVertice(), visitados, menor, llegada);
                         if (!menorAux.esVacia()) {
                             if (!menor.esVacia()) {
@@ -325,7 +325,7 @@ public class Grafo {
     }
 
     public Lista dijkstra(String origen, String destino) {
-        Lista camino = null, visitados, vertices;
+        Lista camino = null, encontrado, vertices;
         NodoVer auxVert;
         NodoAdy auxAdy;
         String elemActual;
@@ -334,7 +334,7 @@ public class Grafo {
         int cantElementos;
 
         if (this.inicio != null) {//Si el grafo esta vacio, return null
-            visitados = new Lista();
+            encontrado = new Lista();
             vertices = new Lista();
             auxVert = this.inicio;
 
@@ -352,42 +352,46 @@ public class Grafo {
                 anterior[i] = null;
             }
 
-            int posActual = 0;
+            int posActual;
             int posModificar;
-            int posDeDondeSaleArco;
+            int posPosibleCandidato;
             double nuevaDistancia;
             elemActual = origen; // ORIGEN!!!
             distancia[vertices.getPos(elemActual)] = 0;
             anterior[vertices.getPos(elemActual)] = null;
-            while (posActual < cantElementos) {
-                //elemActual = vertices.recuperar(posActual);
+            
+            while (encontrado.longitud() <= cantElementos) {      
+                encontrado.insertar(elemActual);
                 auxAdy = getRefVertice(elemActual).getPrimerAdy();
                 while (auxAdy != null) {
-                    if (!visitados.pertenece(elemActual)) {
+                    if (!encontrado.pertenece(auxAdy.getVertice().getElemento())) {
                         posModificar = vertices.getPos(auxAdy.getVertice().getElemento());
-                        //posAnterior = vertices.getPos(vertices.recuperar(posActual-1));
-                        posDeDondeSaleArco = vertices.getPos(elemActual);
-                        nuevaDistancia = auxAdy.getEtiqueta() + distancia[posDeDondeSaleArco];
-                        if (distancia[posModificar] > nuevaDistancia) {
+                        posActual = vertices.getPos(elemActual);
+                        nuevaDistancia = auxAdy.getEtiqueta() + distancia[posActual];
+                        if (nuevaDistancia < distancia[posModificar]) {
                             distancia[posModificar] = nuevaDistancia;
-                            anterior[posModificar] = elemActual;
+                            anterior[posModificar]=elemActual;
                         }
-                        auxAdy = auxAdy.getSigAdy();
-                    } else {
-                        auxAdy = auxAdy.getSigAdy();
                     }
+                   auxAdy=auxAdy.getSigAdy();
                 }
-                visitados.insertar(elemActual);
-
-                posActual++;
-                elemActual = vertices.recuperar(posActual);
+                posPosibleCandidato=0;
+               for (int i = 0; i < vertices.longitud(); i++) { //Revisar long de lista
+                    
+                  if(!encontrado.pertenece(vertices.recuperar(i)) && distancia[i] < distancia[posPosibleCandidato] ){
+                      posPosibleCandidato=i;
+                    }
+                  elemActual = vertices.recuperar(posPosibleCandidato);
+                                        
+                }               
+                
             }
-
+            
             for (int i = 0; i < distancia.length; i++) {
                 System.out.println("Vert: " + vertices.recuperar(i) + "\tDist: " + distancia[i] + "\tPrev: " + anterior[i]);
             }
-        }
 
+        }
         return camino;
     }
 

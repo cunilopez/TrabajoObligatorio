@@ -73,6 +73,9 @@ public class ServicioViajero {
                 System.out.println(grafo.toString());
                 ingresarServicio();
                 break;
+            case 12:
+                System.out.println("NV!");
+                break;
             default:
                 System.out.println("No ha ingresado ninguna opcion válida");
                 System.out.println();
@@ -95,6 +98,7 @@ public class ServicioViajero {
         System.out.println("9. Mostrar todas las Ciudades Alfabeticamente.");
         System.out.println("10. Ejecutar script de carga.");
         System.out.println("11. Mostrar estructuras.");
+        System.out.println("12. Salir.");
         System.out.println();
 
     }
@@ -265,7 +269,7 @@ public class ServicioViajero {
         diccionario.insertar(new Ciudad("NEUQUEN", "NEUQUEN", 500000, true), "NEUQUEN");
         diccionario.insertar(new Ciudad("POSADAS", "MISIONES", 344833, true), "POSADAS");
         diccionario.insertar(new Ciudad("CORDOBA", "CORDOBA", 1391000, false), "CORDOBA");
-        diccionario.insertar(new Ciudad("USUAHIA", "TIERRA DEL FUEGO", 54546, true), "USUAHIA");
+        diccionario.insertar(new Ciudad("USHUAIA", "TIERRA DEL FUEGO", 54546, true), "USUAHIA");
         diccionario.insertar(new Ciudad("SALTA", "SALTA", 535303, true), "SALTA");
         diccionario.insertar(new Ciudad("MENDOZA", "MENDOZA", 115041, false), "MENDOZA");
         diccionario.insertar(new Ciudad("TRELEW", "CHUBUT", 50000, true), "TRELEW");
@@ -280,7 +284,7 @@ public class ServicioViajero {
         grafo.insertarVertice("NEUQUEN");
         grafo.insertarVertice("POSADAS");
         grafo.insertarVertice("CORDOBA");
-        grafo.insertarVertice("USUAHIA");
+        grafo.insertarVertice("USHUAIA");
         grafo.insertarVertice("SALTA");
         grafo.insertarVertice("MENDOZA");
         grafo.insertarVertice("TRELEW");
@@ -293,7 +297,7 @@ public class ServicioViajero {
         grafo.insertarVertice("ROSARIO");
         grafo.insertarVertice("ANGACO");
 
-        grafo.insertarArco("USUAHIA", "TRELEW", 150);
+        grafo.insertarArco("USHUAIA", "TRELEW", 150);
 
         grafo.insertarArco("VIEDMA", "NECOCHEA", 700);
 

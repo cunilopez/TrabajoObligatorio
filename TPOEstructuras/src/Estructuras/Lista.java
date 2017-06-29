@@ -143,9 +143,9 @@ public class Lista {
         return cad;
     }
 
-    public String recuperar(int pos) {
+   public String recuperar(int pos) {
         String elem = "";
-        if (cabecera != null && (pos > 0 || pos <= this.longitud())) {
+        if (cabecera != null && (pos > 0 || pos < this.longitud())) {
             if (pos == 0) {
                 elem = cabecera.getElemento();
             } else {
