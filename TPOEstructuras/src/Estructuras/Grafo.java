@@ -337,6 +337,7 @@ public class Grafo {
             encontrado = new Lista();
             vertices = new Lista();
             auxVert = this.inicio;
+            int i;
 
             while (auxVert != null) {
                 elemActual = auxVert.getElemento();
@@ -347,20 +348,19 @@ public class Grafo {
             cantElementos = vertices.longitud();
             anterior = new String[cantElementos];
             distancia = new double[cantElementos];
-            for (int i = 0; i < cantElementos; i++) {
+            for (i = 0; i < cantElementos; i++) {
                 distancia[i] = Integer.MAX_VALUE;
                 anterior[i] = null;
             }
 
             int posActual;
             int posModificar;
-            int posPosibleCandidato;
+            int posMenor;
             double nuevaDistancia;
             elemActual = origen; // ORIGEN!!!
             distancia[vertices.getPos(elemActual)] = 0;
             anterior[vertices.getPos(elemActual)] = null;
-            
-            while (encontrado.longitud() <= cantElementos) {      
+            while (encontrado.longitud() < cantElementos) {
                 encontrado.insertar(elemActual);
                 auxAdy = getRefVertice(elemActual).getPrimerAdy();
                 while (auxAdy != null) {
@@ -370,28 +370,34 @@ public class Grafo {
                         nuevaDistancia = auxAdy.getEtiqueta() + distancia[posActual];
                         if (nuevaDistancia < distancia[posModificar]) {
                             distancia[posModificar] = nuevaDistancia;
-                            anterior[posModificar]=elemActual;
+                            anterior[posModificar] = elemActual;
                         }
                     }
-                   auxAdy=auxAdy.getSigAdy();
+                    auxAdy = auxAdy.getSigAdy();
                 }
-                posPosibleCandidato=0;
-               for (int i = 0; i < vertices.longitud(); i++) { //Revisar long de lista
-                    
-                  if(!encontrado.pertenece(vertices.recuperar(i)) && distancia[i] < distancia[posPosibleCandidato] ){
-                      posPosibleCandidato=i;
+                posMenor = -1;
+                i = 0;
+                while (posMenor == -1) {
+                    if (!encontrado.pertenece(vertices.recuperar(i))) {
+                        posMenor = i;
                     }
-                  elemActual = vertices.recuperar(posPosibleCandidato);
-                                        
-                }               
-                
-            }
-            
-            for (int i = 0; i < distancia.length; i++) {
-                System.out.println("Vert: " + vertices.recuperar(i) + "\tDist: " + distancia[i] + "\tPrev: " + anterior[i]);
+                    i++;
+                }
+                for (i = posMenor; i < vertices.longitud(); i++) {
+
+                    if (!encontrado.pertenece(vertices.recuperar(i)) && distancia[i] < distancia[posMenor]) {
+                        posMenor = i;
+                    }
+                }
+                elemActual = vertices.recuperar(posMenor);
             }
 
+            for (i = 0; i < distancia.length; i++) {
+                System.out.println("Vert: " + vertices.recuperar(i) + "\tDist: " + distancia[i] + "\tPrev: " + anterior[i]);
+            }
+            return camino;
         }
+
         return camino;
     }
 

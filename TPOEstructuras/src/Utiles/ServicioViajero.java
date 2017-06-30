@@ -303,7 +303,7 @@ public class ServicioViajero {
 
         grafo.insertarArco("TRELEW", "VIEDMA", 30);
         grafo.insertarArco("TRELEW", "NEUQUEN", 600);
-        grafo.insertarArco("TRELEW", "USUAHIA", 150);
+        grafo.insertarArco("TRELEW", "USHUAIA", 150);
 
         grafo.insertarArco("NEUQUEN", "TRELEW", 650);
         grafo.insertarArco("NEUQUEN", "MENDOZA", 500);
