@@ -329,37 +329,31 @@ public class Grafo {
         NodoVer auxVert;
         NodoAdy auxAdy;
         String elemActual;
-        String[] anterior;
         double[] distancia;
-        int cantElementos;
+        int cantElementos, i;
 
         if (this.inicio != null) {//Si el grafo esta vacio, return null
             encontrado = new Lista();
             vertices = new Lista();
             auxVert = this.inicio;
-            int i;
-
             while (auxVert != null) {
                 elemActual = auxVert.getElemento();
                 vertices.insertar(elemActual);
                 auxVert = auxVert.getSigVer();
             }
-
             cantElementos = vertices.longitud();
-            anterior = new String[cantElementos];
             distancia = new double[cantElementos];
+
             for (i = 0; i < cantElementos; i++) {
                 distancia[i] = Integer.MAX_VALUE;
-                anterior[i] = null;
             }
 
             int posActual;
             int posModificar;
             int posMenor;
             double nuevaDistancia;
-            elemActual = origen; // ORIGEN!!!
+            elemActual = origen;
             distancia[vertices.getPos(elemActual)] = 0;
-            anterior[vertices.getPos(elemActual)] = null;
             while (encontrado.longitud() < cantElementos) {
                 encontrado.insertar(elemActual);
                 auxAdy = getRefVertice(elemActual).getPrimerAdy();
@@ -370,11 +364,11 @@ public class Grafo {
                         nuevaDistancia = auxAdy.getEtiqueta() + distancia[posActual];
                         if (nuevaDistancia < distancia[posModificar]) {
                             distancia[posModificar] = nuevaDistancia;
-                            anterior[posModificar] = elemActual;
                         }
                     }
                     auxAdy = auxAdy.getSigAdy();
                 }
+
                 posMenor = -1;
                 i = 0;
                 while (posMenor == -1) {
@@ -391,13 +385,7 @@ public class Grafo {
                 }
                 elemActual = vertices.recuperar(posMenor);
             }
-
-            for (i = 0; i < distancia.length; i++) {
-                System.out.println("Vert: " + vertices.recuperar(i) + "\tDist: " + distancia[i] + "\tPrev: " + anterior[i]);
-            }
-            return camino;
         }
-
         return camino;
     }
 
