@@ -137,33 +137,7 @@ public class Grafo {
         }
         return seElimino;
     }
-
-    public Lista listarProfundidad() {
-        Lista visitados = new Lista();
-        NodoVer aux = this.inicio;
-        while (aux != null) {
-            if (!visitados.pertenece(aux.getElemento())) {
-                profundidadDesde(aux, visitados);
-            }
-            aux = aux.getSigVer();
-        }
-
-        return visitados;
-    }
-
-    private void profundidadDesde(NodoVer nodov, Lista visitados) {
-        if (nodov != null) {
-            visitados.insertar(nodov.getElemento());
-            NodoAdy ady = nodov.getPrimerAdy();
-            while (ady != null) {
-                if (!visitados.pertenece(ady.getVertice().getElemento())) {
-                    profundidadDesde(ady.getVertice(), visitados);
-                }
-                ady = ady.getSigAdy();
-            }
-        }
-    }
-
+    
     public boolean existeCamino(String origen, String destino) {
         boolean existe = false;
 
@@ -332,7 +306,7 @@ public class Grafo {
         double[] distancia;
         int cantElementos, i;
 
-        if (this.inicio != null) {//Si el grafo esta vacio, return null
+        if (this.inicio != null) {
             encontrado = new Lista();
             vertices = new Lista();
             auxVert = this.inicio;

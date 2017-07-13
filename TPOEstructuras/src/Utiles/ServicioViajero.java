@@ -67,14 +67,14 @@ public class ServicioViajero {
                 ingresarServicio();
                 break;
             case 11:
-                System.out.println("El arbol es el siguiente...\n");
+                System.out.println("\nEl arbol es el siguiente...");
                 System.out.println(diccionario.mostrarDiccionario());
-                System.out.println("El grafo es el siguiente...\n");
+                System.out.println("\nEl grafo es el siguiente...");
                 System.out.println(grafo.toString());
                 ingresarServicio();
                 break;
             case 12:
-                System.out.println("NV!");
+                System.out.println("FIN!");
                 break;
             default:
                 System.out.println("No ha ingresado ninguna opcion válida");
@@ -280,7 +280,7 @@ public class ServicioViajero {
         diccionario.insertar(new Ciudad("PARANA", "ENTRE RIOS", 247863, false), "PARANA");
         diccionario.insertar(new Ciudad("RESISTENCIA", "CHACO", 291720, true), "RESISTENCIA");
         diccionario.insertar(new Ciudad("ROSARIO", "SANTA FE", 1194000, true), "ROSARIO");
-        diccionario.insertar(new Ciudad("ANGACO", "SAN JUAN", 45879, false), "ANGACO");
+        diccionario.insertar(new Ciudad("GOYA", "CORRIENTES", 45879, false), "GOYA");
         grafo.insertarVertice("NEUQUEN");
         grafo.insertarVertice("POSADAS");
         grafo.insertarVertice("CORDOBA");
@@ -295,7 +295,7 @@ public class ServicioViajero {
         grafo.insertarVertice("PARANA");
         grafo.insertarVertice("RESISTENCIA");
         grafo.insertarVertice("ROSARIO");
-        grafo.insertarVertice("ANGACO");
+        grafo.insertarVertice("GOYA");
 
         grafo.insertarArco("USHUAIA", "TRELEW", 150);
 
@@ -311,7 +311,7 @@ public class ServicioViajero {
 
         grafo.insertarArco("CORDOBA", "NECOCHEA", 139);
         grafo.insertarArco("CORDOBA", "ROSARIO", 160);
-        grafo.insertarArco("CORDOBA", "ANGACO", 111);
+        grafo.insertarArco("CORDOBA", "GOYA", 111);
 
         grafo.insertarArco("MENDOZA", "CORDOBA", 183);
 
@@ -321,7 +321,7 @@ public class ServicioViajero {
         grafo.insertarArco("TANDIL", "PARANA", 33);
         grafo.insertarArco("TANDIL", "ROSARIO", 99);
 
-        grafo.insertarArco("ANGACO", "SALTA", 43);
+        grafo.insertarArco("GOYA", "SALTA", 43);
 
         grafo.insertarArco("ROSARIO", "CORRIENTES", 25);
 

@@ -237,7 +237,6 @@ public class Diccionario {
                 balancear(actual, padre);
             }
         }
-
         return seElimino;
     }
 
