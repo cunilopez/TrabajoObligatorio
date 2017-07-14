@@ -136,10 +136,7 @@ public class Lista {
                 cad = cad + aux.getElemento() + " ";
                 aux = aux.getEnlace();
             }
-        } else {
-            cad = "Vacia!";
-        }
-
+        } 
         return cad;
     }
 

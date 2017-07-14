@@ -94,8 +94,8 @@ public class ServicioViajero {
         System.out.println("2. Alta y Baja de un tramo de ruta.");
         System.out.println("3. Mostrar atributos de una Ciudad.");
         System.out.println("4. Listar rango de Ciudades.");
-        System.out.println("5. Camino mas corto en Kilometros.");
-        System.out.println("6. Existe camino mas corto que K Kilometros?");
+        System.out.println("5. Camino mas corto.");
+        System.out.println("6. ¿Existe camino mas corto que K Kilometros?");
         System.out.println("7. Camino que pasa por menos Ciudades.");
         System.out.println("8. Camino que pasa por ciudades con alojamiento");
         System.out.println("9. Mostrar todas las Ciudades Alfabeticamente.");
@@ -108,12 +108,18 @@ public class ServicioViajero {
 
     public void caminoMasCorto() {
         String origen, destino;
+        double dist;
         System.out.println("Ingrese la Ciudad de Origen.");
         origen = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese el Destino");
         destino = TecladoIn.readLine().toUpperCase();
         if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
-            System.out.println("La menor distancia que existe desde:" + origen + " y " + destino + " es de:" + grafo.dijkstra(origen, destino));
+            dist = grafo.dijkstra(origen, destino);
+            if (dist == Double.MAX_VALUE) {
+                System.out.println("El destino es inalcanzable");
+            } else {
+                System.out.println("La menor distancia que existe desde:" + origen + " y " + destino + " es de:" + dist);
+            }
         } else {
             System.out.println("Alguna de las Ciudades ingresadas no esta en las estructuras.");
         }
