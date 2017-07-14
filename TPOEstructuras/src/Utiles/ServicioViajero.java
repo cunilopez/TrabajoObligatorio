@@ -199,16 +199,16 @@ public class ServicioViajero {
         origen = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese el destino del tramo de Ruta");
         destino = TecladoIn.readLine().toUpperCase();
-        if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
-            System.out.println("Ingrese la cantidad de kilometros que hay entre estas Ciudades.");
-            kilometros = TecladoIn.readLineDouble();
-            if (kilometros >= 0) {
-                grafo.insertarArco(origen, destino, kilometros);
+        System.out.println("Ingrese la cantidad de kilometros que hay entre estas Ciudades.");
+        kilometros = TecladoIn.readLineDouble();
+        if (kilometros >= 0) {
+            if (grafo.insertarArco(origen, destino, kilometros)) {
+                System.out.println("Se ha dado de alta el camino CORRECTAMENTE");
             } else {
-                System.out.println("Ingresó un numero negativo.");
+                System.out.println("Alguna de las ciudades no esta en las Estructuras.");
             }
         } else {
-            System.out.println("El orgien o el destino no se encuentran en las estructuras.");
+            System.out.println("Ingresó un numero negativo.");
         }
     }
 
