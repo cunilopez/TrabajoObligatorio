@@ -137,7 +137,7 @@ public class Grafo {
         }
         return seElimino;
     }
-    
+
     public boolean existeCamino(String origen, String destino) {
         boolean existe = false;
 
@@ -298,15 +298,21 @@ public class Grafo {
         return cad;
     }
 
-    public Lista dijkstra(String origen, String destino) {
-        Lista camino = null, encontrado, vertices;
-        NodoVer auxVert;
-        NodoAdy auxAdy;
-        String elemActual;
-        double[] distancia;
-        int cantElementos, i;
+    public double dijkstra(String origen, String destino) {
+        
+        double[] distancia = new double[1];
+        distancia[0]= Double.MAX_VALUE ;//Caso que el grafo este vacio
+        int posMenor = 0;// Se inicializan los valores para que devuelva "infinito"
 
         if (this.inicio != null) {
+            Lista encontrado, vertices;
+            NodoVer auxVert;
+            NodoAdy auxAdy;
+            String elemActual;
+            boolean seEncontro = false;
+            int cantElementos, i, posActual, posModificar; 
+            double nuevaDistancia;
+            
             encontrado = new Lista();
             vertices = new Lista();
             auxVert = this.inicio;
@@ -317,18 +323,13 @@ public class Grafo {
             }
             cantElementos = vertices.longitud();
             distancia = new double[cantElementos];
-
             for (i = 0; i < cantElementos; i++) {
-                distancia[i] = Integer.MAX_VALUE;
-            }
-
-            int posActual;
-            int posModificar;
-            int posMenor;
-            double nuevaDistancia;
+                distancia[i] = Double.MAX_VALUE;
+            }            
+            
             elemActual = origen;
             distancia[vertices.getPos(elemActual)] = 0;
-            while (encontrado.longitud() < cantElementos) {
+            while (!seEncontro && encontrado.longitud() < cantElementos) {
                 encontrado.insertar(elemActual);
                 auxAdy = getRefVertice(elemActual).getPrimerAdy();
                 while (auxAdy != null) {
@@ -342,7 +343,6 @@ public class Grafo {
                     }
                     auxAdy = auxAdy.getSigAdy();
                 }
-
                 posMenor = -1;
                 i = 0;
                 while (posMenor == -1) {
@@ -358,9 +358,12 @@ public class Grafo {
                     }
                 }
                 elemActual = vertices.recuperar(posMenor);
+                if (elemActual.equals(destino)) {
+                    seEncontro = true;
+                }
             }
         }
-        return camino;
+        return distancia[posMenor];
     }
 
     private NodoVer getRefVertice(String elem) {
