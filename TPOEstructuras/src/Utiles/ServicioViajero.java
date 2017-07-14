@@ -49,6 +49,8 @@ public class ServicioViajero {
                 ingresarServicio();
                 break;
             case 6:
+                caminoMasCortoKilometro();
+                ingresarServicio();
                 break;
             case 7:
                 caminoMenorCiudades();
@@ -87,6 +89,7 @@ public class ServicioViajero {
     }
 
     public void menu() {
+        System.out.println();
         System.out.println("1. Alta y Baja de una Ciudad.");
         System.out.println("2. Alta y Baja de un tramo de ruta.");
         System.out.println("3. Mostrar atributos de una Ciudad.");
@@ -109,9 +112,33 @@ public class ServicioViajero {
         origen = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese el Destino");
         destino = TecladoIn.readLine().toUpperCase();
-        System.out.println(grafo.dijkstra(origen, destino));
+        if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
+            System.out.println("La menor distancia que existe desde:" + origen + " y " + destino + " es de:" + grafo.dijkstra(origen, destino));
+        } else {
+            System.out.println("Alguna de las Ciudades ingresadas no esta en las estructuras.");
+        }
+
     }
-    
+
+    public void caminoMasCortoKilometro() {
+        String origen, destino;
+        int k;
+        System.out.println("Ingrese la Ciudad de Origen.");
+        origen = TecladoIn.readLine().toUpperCase();
+        System.out.println("Ingrese el Destino");
+        destino = TecladoIn.readLine().toUpperCase();
+        System.out.println("¿Cual es la distancia que no debe superar el camino?");
+        k = TecladoIn.readLineInt();
+        if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
+            if (k <= grafo.dijkstra(origen, destino)) {
+                System.out.println("Existe camino mas corto que: " + k + "Kms");
+            } else {
+                System.out.println("El camino supera los: " + k + "Kms");
+            }
+        } else {
+            System.out.println("Alguna de las Ciudades ingresadas no esta en las estructuras.");
+        }
+    }
 
     public void listarRango() {
         String inicio, fin;
@@ -144,7 +171,7 @@ public class ServicioViajero {
         int opcion;
         System.out.println("1. Dar de alta un Tramo.");
         System.out.println("2. Dar de baja un Tramo.");
-        opcion = TecladoIn.readInt();
+        opcion = TecladoIn.readLineInt();
         switch (opcion) {
             case 1:
                 altaTramo();
@@ -168,7 +195,7 @@ public class ServicioViajero {
         destino = TecladoIn.readLine().toUpperCase();
         if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
             System.out.println("Ingrese la cantidad de kilometros que hay entre estas Ciudades.");
-            kilometros = TecladoIn.readInt();
+            kilometros = TecladoIn.readLineInt();
             if (kilometros >= 0) {
                 grafo.insertarArco(origen, destino, kilometros);
             } else {
@@ -197,7 +224,7 @@ public class ServicioViajero {
         int opcion;
         System.out.println("1. Dar de alta a una Ciudad.");
         System.out.println("2. Dar de baja una Ciudad.");
-        opcion = TecladoIn.readInt();
+        opcion = TecladoIn.readLineInt();
         switch (opcion) {
             case 1:
                 alta();
@@ -269,7 +296,7 @@ public class ServicioViajero {
         diccionario.insertar(new Ciudad("NEUQUEN", "NEUQUEN", 500000, true), "NEUQUEN");
         diccionario.insertar(new Ciudad("POSADAS", "MISIONES", 344833, true), "POSADAS");
         diccionario.insertar(new Ciudad("CORDOBA", "CORDOBA", 1391000, false), "CORDOBA");
-        diccionario.insertar(new Ciudad("USHUAIA", "TIERRA DEL FUEGO", 54546, true), "USUAHIA");
+        diccionario.insertar(new Ciudad("USHUAIA", "TIERRA DEL FUEGO", 54546, true), "USHUAIA");
         diccionario.insertar(new Ciudad("SALTA", "SALTA", 535303, true), "SALTA");
         diccionario.insertar(new Ciudad("MENDOZA", "MENDOZA", 115041, false), "MENDOZA");
         diccionario.insertar(new Ciudad("TRELEW", "CHUBUT", 50000, true), "TRELEW");
