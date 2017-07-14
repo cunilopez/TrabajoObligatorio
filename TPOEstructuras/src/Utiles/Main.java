@@ -10,14 +10,10 @@ package Utiles;
  * @author Soporte-1
  */
 public class Main {
-    
-    public static void main(String[]args){
+
+    public static void main(String[] args) {
         ServicioViajero service = new ServicioViajero();
-        service.ingresarServicio();        
-        
+        service.ingresarServicio();
     }
-    
-    
-    
-   
+
 }

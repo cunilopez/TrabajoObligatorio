@@ -128,13 +128,13 @@ public class ServicioViajero {
 
     public void caminoMasCortoKilometro() {
         String origen, destino;
-        int k;
+        double k;
         System.out.println("Ingrese la Ciudad de Origen.");
         origen = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese el Destino");
         destino = TecladoIn.readLine().toUpperCase();
         System.out.println("¿Cual es la distancia que no debe superar el camino?");
-        k = TecladoIn.readLineInt();
+        k = TecladoIn.readLineDouble();
         if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
             if (k <= grafo.dijkstra(origen, destino)) {
                 System.out.println("Existe camino mas corto que: " + k + "Kms");
@@ -194,14 +194,14 @@ public class ServicioViajero {
 
     public void altaTramo() {
         String origen, destino;
-        int kilometros;
+        double kilometros;
         System.out.println("Ingrese el origen del tramo de Ruta.");
         origen = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese el destino del tramo de Ruta");
         destino = TecladoIn.readLine().toUpperCase();
         if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
             System.out.println("Ingrese la cantidad de kilometros que hay entre estas Ciudades.");
-            kilometros = TecladoIn.readLineInt();
+            kilometros = TecladoIn.readLineDouble();
             if (kilometros >= 0) {
                 grafo.insertarArco(origen, destino, kilometros);
             } else {

@@ -299,9 +299,9 @@ public class Grafo {
     }
 
     public double dijkstra(String origen, String destino) {
-        
+
         double[] distancia = new double[1];
-        distancia[0]= Double.MAX_VALUE ;//Caso que el grafo este vacio
+        distancia[0] = Double.MAX_VALUE;//Caso que el grafo este vacio
         int posMenor = 0;// Se inicializan los valores para que devuelva "infinito"
 
         if (this.inicio != null) {
@@ -310,9 +310,9 @@ public class Grafo {
             NodoAdy auxAdy;
             String elemActual;
             boolean seEncontro = false;
-            int cantElementos, i, posActual, posModificar; 
+            int cantElementos, i, posActual, posModificar;
             double nuevaDistancia;
-            
+
             encontrado = new Lista();
             vertices = new Lista();
             auxVert = this.inicio;
@@ -325,8 +325,8 @@ public class Grafo {
             distancia = new double[cantElementos];
             for (i = 0; i < cantElementos; i++) {
                 distancia[i] = Double.MAX_VALUE;
-            }            
-            
+            }
+
             elemActual = origen;
             distancia[vertices.getPos(elemActual)] = 0;
             while (!seEncontro && encontrado.longitud() < cantElementos) {
