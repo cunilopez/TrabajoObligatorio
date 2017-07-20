@@ -13,6 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         ServicioViajero service = new ServicioViajero();
+        service.scriptCarga();//Script de carga (comentarlo para que las estructuras esten vacia).
         service.ingresarServicio();
     }
 

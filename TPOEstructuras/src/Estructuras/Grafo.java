@@ -136,40 +136,7 @@ public class Grafo {
             }
         }
         return seElimino;
-    }
-
-    public boolean existeCamino(String origen, String destino) {
-        boolean existe = false;
-
-        NodoVer o = ubicarVertice(origen);
-        NodoVer d = ubicarVertice(destino);
-
-        if (o != null && d != null) {
-            Lista visitados = new Lista();
-            existe = existeCaminoAux(o, destino, visitados);
-        }
-
-        return existe;
-    }
-
-    private boolean existeCaminoAux(NodoVer origen, String destino, Lista visitados) {
-        boolean existe = false;
-        if (origen != null) {
-            if (origen.getElemento().equals(destino)) {
-                existe = true;
-            } else {
-                visitados.insertar(origen.getElemento());
-                NodoAdy ady = origen.getPrimerAdy();
-                while (!existe && ady != null) {
-                    if (!visitados.pertenece(ady.getVertice().getElemento())) {
-                        existe = existeCaminoAux(ady.getVertice(), destino, visitados);
-                    }
-                    ady = ady.getSigAdy();
-                }
-            }
-        }
-        return existe;
-    }
+    }    
 
     public Lista caminoMenorCantCiudades(String partida, String llegada) {
         Lista visitados = new Lista();
@@ -298,11 +265,11 @@ public class Grafo {
         return cad;
     }
 
-    public double dijkstra(String origen, String destino) {
-
+    public double dijkstra(String origen, String destino) { //Devuelve la menor distancia desde un origen a un destino,
+                                                            //en caso de devolver el double.MAX_VALUE significa que la ciudad es inalcanzable.
         double[] distancia = new double[1];
         distancia[0] = Double.MAX_VALUE;//Caso que el grafo este vacio
-        int posMenor = 0;// Se inicializan los valores para que devuelva "infinito"
+        int posMenor = 0;// Se inicializan los valores para que devuelva "infinito" 
 
         if (this.inicio != null) {
             Lista encontrado, vertices;
