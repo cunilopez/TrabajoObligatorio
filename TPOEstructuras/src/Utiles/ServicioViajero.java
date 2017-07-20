@@ -161,7 +161,12 @@ public class ServicioViajero {
         partida = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese Ciudad donde desea llegar");
         llegada = TecladoIn.readLine().toUpperCase();
-        System.out.println(grafo.caminoConAlojamiento(partida, llegada, diccionario).toString());
+        if (diccionario.existeCiudad(partida) && diccionario.existeCiudad(llegada)) {
+            System.out.println(grafo.caminoConAlojamiento(partida, llegada, diccionario).toString());
+        } else {
+            System.out.println("Alguna de las ciudades ingresadas no esta en las estructuras.");
+        }
+
     }
 
     public void caminoMenorCiudades() {
@@ -170,7 +175,11 @@ public class ServicioViajero {
         partida = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese Ciudad donde desea llegar");
         llegada = TecladoIn.readLine().toUpperCase();
-        System.out.println(grafo.caminoMenorCantCiudades(partida, llegada).toString());
+        if (diccionario.existeCiudad(partida) && diccionario.existeCiudad(llegada)) {
+            System.out.println(grafo.caminoMenorCantCiudades(partida, llegada).toString());
+        } else {
+            System.out.println("Alguna de las ciudades ingresadas no esta en las estructuras.");
+        }
     }
 
     public void altaobajaTramo() {
