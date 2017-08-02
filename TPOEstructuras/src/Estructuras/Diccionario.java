@@ -71,10 +71,10 @@ public class Diccionario {
         int altD = 0, altI = 0, alt;
         if (actual != null) {
             if (actual.getHijoIzquierdo() != null) {
-                altI = 1 + alturaAux(actual.getHijoIzquierdo());
+                altI = 1 + actual.getHijoIzquierdo().getAltura();
             }
             if (actual.getHijoDerecho() != null) {
-                altD = 1 + alturaAux(actual.getHijoDerecho());
+                altD = 1 + actual.getHijoDerecho().getAltura();
             }
             alt = (altI >= altD) ? altI : altD;
 
