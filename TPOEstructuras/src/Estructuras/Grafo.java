@@ -54,10 +54,15 @@ public class Grafo {
                     }
                     if (!existe) {
                         adyacente.setSigAdy(new NodoAdy(destino, etiqueta, null));
+                        NodoAdy adyDes = new NodoAdy(origen, etiqueta, destino.getPrimerAdy());
+                        destino.setPrimerAdy(adyDes);
+
                         seInserto = true;
                     }
                 } else {
                     origen.setPrimerAdy(new NodoAdy(destino, etiqueta, null));
+                    NodoAdy adyDes = new NodoAdy(origen, etiqueta, destino.getPrimerAdy());
+                    destino.setPrimerAdy(adyDes);
                     seInserto = true;
                 }
 
@@ -136,7 +141,7 @@ public class Grafo {
             }
         }
         return seElimino;
-    }    
+    }
 
     public Lista caminoMenorCantCiudades(String partida, String llegada) {
         Lista visitados = new Lista();
@@ -266,7 +271,7 @@ public class Grafo {
     }
 
     public double dijkstra(String origen, String destino) { //Devuelve la menor distancia desde un origen a un destino,
-                                                            //en caso de devolver el double.MAX_VALUE significa que la ciudad es inalcanzable.
+        //en caso de devolver el double.MAX_VALUE significa que la ciudad es inalcanzable.
         double[] distancia = new double[1];
         distancia[0] = Double.MAX_VALUE;//Caso que el grafo este vacio
         int posMenor = 0;// Se inicializan los valores para que devuelva "infinito" 
