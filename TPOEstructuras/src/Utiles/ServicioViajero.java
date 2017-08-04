@@ -114,8 +114,8 @@ public class ServicioViajero {
         System.out.println("Ingrese el Destino");
         destino = TecladoIn.readLine().toUpperCase();
         if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
-            dist = grafo.dijkstra(origen, destino);
-            if (dist == Double.MAX_VALUE) {
+            dist = grafo.caminoMasCortoDFS(origen, destino);
+            if (dist == -1) {
                 System.out.println("El destino es inalcanzable");
             } else {
                 System.out.println("La menor distancia que existe desde:" + origen + " y " + destino + " es de:" + dist);

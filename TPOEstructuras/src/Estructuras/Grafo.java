@@ -353,4 +353,36 @@ public class Grafo {
 
         return buscado;
     }
+
+    public double caminoMasCortoDFS(String origen, String destino) {
+        double distancia = -1; //Si el metodo devuelve -1 quiere decir que no alcanzo el destino.
+        Lista visitados = new Lista();
+        NodoVer actual = ubicarVertice(origen);
+        distancia = caminoMasCortoDFSAux(actual, visitados, destino, 0, distancia);
+        return distancia;
+    }
+
+    private double caminoMasCortoDFSAux(NodoVer actual, Lista visitados, String destino, double recorrido, double distancia) {
+
+        NodoAdy adyacente;
+        visitados.insertar(actual.getElemento());
+        adyacente = actual.getPrimerAdy();
+        while (adyacente != null) {
+            if (adyacente.getVertice().getElemento().equals(destino)) {
+                if (distancia == -1) {
+                    distancia = recorrido + adyacente.getEtiqueta();
+                } else {
+                    distancia = (distancia > recorrido + adyacente.getEtiqueta()) ? (recorrido + adyacente.getEtiqueta()) : (distancia);
+                }
+            }
+            if (!visitados.pertenece(adyacente.getVertice().getElemento())) {
+                if ((distancia == -1) || (recorrido + adyacente.getEtiqueta() < distancia)) {
+                    distancia = caminoMasCortoDFSAux(adyacente.getVertice(), visitados, destino, recorrido + adyacente.getEtiqueta(), distancia);
+                }
+            }
+            
+            adyacente = adyacente.getSigAdy();
+        }
+        return distancia;
+    }
 }
