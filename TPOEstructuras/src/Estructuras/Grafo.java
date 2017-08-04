@@ -379,10 +379,15 @@ public class Grafo {
                 if ((distancia == -1) || (recorrido + adyacente.getEtiqueta() < distancia)) {
                     distancia = caminoMasCortoDFSAux(adyacente.getVertice(), visitados, destino, recorrido + adyacente.getEtiqueta(), distancia);
                 }
+            } else {
+                if (recorrido + adyacente.getEtiqueta() < distancia) {
+                    distancia = caminoMasCortoDFSAux(adyacente.getVertice(), visitados, destino, recorrido + adyacente.getEtiqueta(), distancia);
+                }
             }
-            
+
             adyacente = adyacente.getSigAdy();
         }
+
         return distancia;
     }
 }
