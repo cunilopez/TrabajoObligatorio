@@ -128,7 +128,7 @@ public class ServicioViajero {
 
     public void caminoMasCortoKilometro() {
         String origen, destino;
-        double k;
+        double k, distancia;
         System.out.println("Ingrese la Ciudad de Origen.");
         origen = TecladoIn.readLine().toUpperCase();
         System.out.println("Ingrese el Destino");
@@ -136,10 +136,15 @@ public class ServicioViajero {
         System.out.println("¿Cual es la distancia que no debe superar el camino?");
         k = TecladoIn.readLineDouble();
         if (diccionario.existeCiudad(origen) && diccionario.existeCiudad(destino)) {
-            if (k <= grafo.dijkstra(origen, destino)) {
-                System.out.println("Existe camino mas corto que: " + k + "Kms");
+            distancia = grafo.caminoMasCortoDFS(origen, destino);
+            if (distancia == -1) {
+                System.out.println("El destino es inalcanzable");
             } else {
-                System.out.println("El camino supera los: " + k + "Kms");
+                if (k <= distancia) {
+                    System.out.println("Existe camino mas corto que: " + k + "Kms");
+                } else {
+                    System.out.println("El camino supera los: " + k + "Kms");
+                }
             }
         } else {
             System.out.println("Alguna de las Ciudades ingresadas no esta en las estructuras.");
