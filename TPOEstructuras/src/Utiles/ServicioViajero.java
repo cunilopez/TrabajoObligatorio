@@ -118,7 +118,7 @@ public class ServicioViajero {
             if (dist == -1) {
                 System.out.println("El destino es inalcanzable");
             } else {
-                System.out.println("La menor distancia que existe desde:" + origen + " y " + destino + " es de:" + dist);
+                System.out.println("La menor distancia que existe desde:" + origen + " y " + destino + " es de: " + dist);
             }
         } else {
             System.out.println("Alguna de las Ciudades ingresadas no esta en las estructuras.");
@@ -140,7 +140,7 @@ public class ServicioViajero {
             if (distancia == -1) {
                 System.out.println("El destino es inalcanzable");
             } else {
-                if (k <= distancia) {
+                if (k >= distancia) {
                     System.out.println("Existe camino mas corto que: " + k + "Kms");
                 } else {
                     System.out.println("El camino supera los: " + k + "Kms");
